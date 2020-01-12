@@ -5,6 +5,10 @@ import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import utils.Point3D;
 
 public class DGraph implements graph, Serializable {
@@ -139,14 +143,29 @@ public class DGraph implements graph, Serializable {
 		return m;
 	}
 
-	public void init(String g) {
+	public void init(String g) throws JSONException {
 		
 		
+		JSONObject m = new JSONObject(g);
 		
-		
-		
-		
-		
-		
+		try {
+			JSONArray node = m.getJSONArray("Nodes");
+			JSONArray edge = m.getJSONArray("Edges");
+			
+			
+			for (int i = 0; i < node.length(); i++) {
+				JSONObject n = node.getJSONObject(i);
+				NodeData k = new NodeData(n.getInt("id"),new Point3D(n.getString("pos")));
+				this.addNode(k);
+			}
+			for (int i = 0; i < edge.length(); i++) {
+				JSONObject ed = edge.getJSONObject(i);
+				EdgeData e = new EdgeData(ed.getInt("src"), ed.getInt("dest"), ed.getDouble("w"));
+				connect(e.getSrc(), e.getDest(), e.getWeight());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

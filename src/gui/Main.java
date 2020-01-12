@@ -1,9 +1,15 @@
 package gui;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
+import algorithms.Graph_Algo;
 import dataStructure.DGraph;
 import dataStructure.NodeData;
+import dataStructure.graph;
+import dataStructure.node_data;
 import utils.Point3D;
 
 public class Main {
@@ -42,7 +48,15 @@ public class Main {
 		temp.connect(b.getKey(), f.getKey(), 3);
 		temp.connect(f.getKey(), c.getKey(), 3);
 		temp.connect(d.getKey(), e.getKey(), 3);
-	//	graph_gui window1 = new graph_gui();
+		
+		Graph_Algo da = new Graph_Algo(temp);
+		System.out.println(da.shortestPathDist(6,2));
+		ArrayList<node_data> list = new ArrayList<node_data>();
+		list = (ArrayList<node_data>) da.shortestPath(6,2);
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getKey());
+		}
+		//graph_gui window1 = new graph_gui();
 		graph_gui window = new graph_gui(temp);
 		
 		window.setVisible(true);

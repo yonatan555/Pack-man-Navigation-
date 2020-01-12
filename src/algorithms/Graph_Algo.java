@@ -126,6 +126,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
+		isclear();
 		boolean flag = false ;
 		boolean flag1 = false;
 		Collection<node_data> n = this.m.getV();
@@ -179,6 +180,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {       //return the list from the end to start
+		isclear();
 		shortestPathDist(src, dest);
 		List<node_data> list = new ArrayList<node_data>();
 		int key_node = 0;
@@ -236,7 +238,8 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		Collection<node_data> node = this.m.getV();
 		Iterator<node_data> it = node.iterator();
 		while(it.hasNext()) {
-			it.next().setWeight(Double.MAX_VALUE);
+			node_data n = it.next();
+			n.setWeight(Double.MAX_VALUE);		
 		}
 	}
 
