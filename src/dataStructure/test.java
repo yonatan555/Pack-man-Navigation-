@@ -2,6 +2,11 @@ package dataStructure;
 
 import org.json.JSONException;
 
+import Server.Game_Server;
+import Server.game_service;
+import gameClient.fruit;
+import gameClient.robot;
+
 public class test {
 
 	public static void main(String[] args) throws JSONException {
@@ -41,9 +46,16 @@ public class test {
 				+ ",{\"pos\":\"35.18910131880549,32.103618700840336,0.0\",\"id\":10}]}";
 		m.init(A);
 		
-		
-		
-		
+		game_service game = Game_Server.getServer(1);
+		String s = game.toString();
+		System.out.println(s);
+		game.addRobot(1);
+		for(String fruit1 : game.getFruits()) {
+			//robot t = new rt(fruit);//
+			fruit f = new fruit(fruit1);
+			System.out.println(f);
+			System.out.println(fruit1);
+		}
 		
 		System.out.println();
 	}

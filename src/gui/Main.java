@@ -10,6 +10,7 @@ import dataStructure.DGraph;
 import dataStructure.NodeData;
 import dataStructure.graph;
 import dataStructure.node_data;
+import gameClient.graph_gui;
 import utils.Point3D;
 
 public class Main {

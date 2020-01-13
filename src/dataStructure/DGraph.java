@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 
 import utils.Point3D;
 
@@ -155,6 +156,7 @@ public class DGraph implements graph, Serializable {
 			
 			for (int i = 0; i < node.length(); i++) {
 				JSONObject n = node.getJSONObject(i);
+				
 				NodeData k = new NodeData(n.getInt("id"),new Point3D(n.getString("pos")));
 				this.addNode(k);
 			}
