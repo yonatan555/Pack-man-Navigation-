@@ -169,13 +169,13 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 					{
 						g.setColor(Color.black);
 						g.setFont((new Font("TimesRoman", Font.PLAIN, 40)));
-						g.drawLine((int) x, (int) y, (int) x1,(int) y1); // draw edge 	
+						g.drawLine((int) x +2, (int) y+2, (int) x1+2,(int) y1+2); // draw edge 	
 					}
 					else if (ed.getTag() == 300)
 					{
 						g.setFont((new Font("TimesRoman", Font.PLAIN, 40)));
 						g.setColor(Color.GRAY);
-						g.drawLine((int) x, (int) y, (int) x1,(int) y1); // draw edge 	
+						g.drawLine((int) x +2 , (int) y +2, (int) x1 +2 ,(int) y1+ 2); // draw edge 	
 					}
 					else
 					{
@@ -189,7 +189,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 							(((int)y+(int)y1 )/ 2) + 1);
 					g.setColor(Color.YELLOW);
 					g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); // set the font of the oval
-					g.fillOval(((int)x*8 +(int)x1)/9,((int)y*8+(int)y1)/9, 7, 7); // draw enterance point
+					g.fillOval(((int)x +(int)x1*8)/9,((int)y+(int)y1*8)/9, 7, 7); // draw enterance point
 
 				}
 			}
@@ -297,6 +297,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	 * 
 	 * */
 	private void Shortest_Path_Dist() {
+		isclear();
 		Graph_Algo m = new Graph_Algo();
 		m.init(this.grp);
 
