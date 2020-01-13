@@ -58,9 +58,9 @@ public class Main {
 			System.out.println(list.get(i).getKey());
 		}
 		//graph_gui window1 = new graph_gui();
-		graph_gui window = new graph_gui(temp);
+		//graph_gui window = new graph_gui(temp);
 		
-		window.setVisible(true);
+	//	window.setVisible(true);
 	}
 
 }

@@ -23,6 +23,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.json.JSONException;
+
+import Server.game_service;
 import dataStructure.DGraph;
 import dataStructure.EdgeData;
 import dataStructure.NodeData;
@@ -39,11 +42,11 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	 * 
 	 * */
 	private static JFrame frame;
-	graph grp = null;
 	double Min_x;
 	double Max_x;
 	double Min_y;
 	double Max_y;
+	play p;
 /**
  * init empty graph
  * 
@@ -54,11 +57,13 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	}
 	/**
 	 * init graph from graph
+	 * @throws JSONException 
 	 * 
 	 * */
-	public graph_gui(graph g) {
-		this.grp = g;
-		set(g);
+	public graph_gui(game_service game) throws JSONException {
+		this.p= new play(game);
+		
+		set(p.grp);
 		initGUI();
 	}
 	/**
@@ -86,7 +91,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	 * 
 	 * */
 	private void initGUI() {
-
+		
 		this.setSize(900, 750);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -123,7 +128,8 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 		MenuItem item7 = new MenuItem("TSP");
 		item7.addActionListener(this);
 		menu.add(item7);
-
+		
+		
 	}
 
 	/**
@@ -150,20 +156,33 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 
 		node_data dest = null;
 
-		if (this.grp != null) {
-			for (node_data no : this.grp.getV()) {
-				double x = scale(no.getLocation().x(), Min_x, Max_x, Min_y, Max_y);
-				double y= scale(no.getLocation().y(), Min_x, Max_x, Min_y, Max_y);
+		if (this.p.grp != null) {
+			for (int i = 0; i < p.fru.size(); i++) {
+				double x = scale(p.fru.get(i).pos.x(), Min_x, Max_x, 20, getWidth()-100);
+				double y = scale(p.fru.get(i).pos.y(), Min_y, Max_y, 100, getHeight()-50);
+				if(p.fru.get(i).type == 1){
+				g.setColor(Color.PINK);
+				g.fillOval((int)x, (int)y, 15, 15);
+				}
+				else
+				{
+					g.setColor(Color.GREEN);
+					g.fillOval((int)x, (int)y, 15, 15);
+				}
+			}
+			for (node_data no : this.p.grp.getV()) {
+				double x = scale(no.getLocation().x(), Min_x, Max_x, 20, getWidth()-100);
+				double y = scale(no.getLocation().y(), Min_y, Max_y, 100, getHeight()-50);
 				g.setColor(Color.BLUE);
 				g.fillOval((int)x-2, (int)y-5, 15, 15); // draw src point
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); // set the font of the oval
-				g.drawString("" + no.getKey(), (int)x, (int)y + 1); // draw the num of src  point
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 18)); // set the font of the oval
+				g.drawString("" + no.getKey(), (int)x, (int)y -7); // draw the num of src  point
 
-				for (edge_data ed : this.grp.getE(no.getKey())) {
-					dest = this.grp.getNode(ed.getDest());
+				for (edge_data ed : this.p.grp.getE(no.getKey())) {
+					dest = this.p.grp.getNode(ed.getDest());
 					
-					double x1 = scale( dest.getLocation().x(), Min_x, Max_x, Min_y, Max_y);
-					double y1 = scale( dest.getLocation().y(), Min_x, Max_x, Min_y, Max_y);
+					double x1 = scale( dest.getLocation().x(), Min_x, Max_x,20, getWidth()-100);
+					double y1 = scale( dest.getLocation().y(), Min_y, Max_y,100, getHeight()-50);
 					
 					if (ed.getTag() == 200 )
 					{
@@ -194,7 +213,8 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 				}
 			}
 		}
-		else {
+		else 
+		{
 			return;
 		}
 	}
@@ -212,14 +232,14 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 			Load();
 			repaint();
 		}
-		if (this.grp == null) {
+		if (this.p.grp == null) {
 			JFrame Shortest = new JFrame();
 			JOptionPane.showMessageDialog(Shortest, "the graph is not initilized");
 			return;
 		}
 		if (op.equals("Paint_Graph")) {
 			isclear();
-			Collection<node_data> m = this.grp.getV();
+			Collection<node_data> m = this.p.grp.getV();
 			Iterator<node_data> i = m.iterator();
 			while (i.hasNext()) {
 				i.next().setTag(0);
@@ -245,7 +265,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	 * */
 	private void isConnected() {
 		Graph_Algo m = new Graph_Algo();
-		m.init(this.grp);
+		m.init(this.p.grp);
 		JFrame isC = new JFrame();
 		JOptionPane.showMessageDialog(isC, "The graph is connected? :" + m.isConnected());
 	}
@@ -255,7 +275,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	 * */
 	private void Save() {
 		Graph_Algo temp = new Graph_Algo();
-		temp.init(grp);
+		temp.init(this.p.grp);
 
 		FileDialog chooser = new FileDialog(graph_gui.frame, "", FileDialog.SAVE);
 		chooser.setVisible(true);
@@ -283,7 +303,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 				File selectedFile = fileChooser.getSelectedFile();
 
 				temp.init(selectedFile.getPath());
-				grp = temp.copy();
+				this.p.grp = (DGraph) temp.copy();
 				repaint();
 			}
 
@@ -299,7 +319,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	private void Shortest_Path_Dist() {
 		isclear();
 		Graph_Algo m = new Graph_Algo();
-		m.init(this.grp);
+		m.init(this.p.grp);
 
 		JFrame Shortest = new JFrame();
 
@@ -318,11 +338,11 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	 * 
 	 * */
 	private void isclear() {
-		Collection<node_data> node = this.grp.getV();
+		Collection<node_data> node = this.p.grp.getV();
 		for (node_data node_data : node) {
-			Collection<edge_data> ed = this.grp.getE(node_data.getKey());
+			Collection<edge_data> ed = this.p.grp.getE(node_data.getKey());
 			for (edge_data e : ed) {
-				this.grp.getEdge(node_data.getKey(), e.getDest()).setTag(0);
+				this.p.grp.getEdge(node_data.getKey(), e.getDest()).setTag(0);
 			}
 		}
 	}
@@ -333,7 +353,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	private void Shortest_Path() {
 		isclear();
 		Graph_Algo m = new Graph_Algo();
-		m.init(this.grp);
+		m.init(this.p.grp);
 		JFrame Shortest = new JFrame();
 		String x = JOptionPane.showInputDialog(Shortest, "Enter start point");
 		String y = JOptionPane.showInputDialog(Shortest, "Enter end point");
@@ -344,7 +364,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 			int len = lis.size()-1;
 			for (int i = len; i >0 ; i--) {
 				System.out.println(lis.get(i).getKey()+"->"+ lis.get(i-1).getKey());
-				this.grp.getEdge(lis.get(i).getKey(), lis.get(i-1).getKey()).setTag(200);	
+				this.p.grp.getEdge(lis.get(i).getKey(), lis.get(i-1).getKey()).setTag(200);	
 			}
 			repaint();
 		} catch (Exception e) {
@@ -359,7 +379,7 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 	private void TSP() {
 		isclear();
 		Graph_Algo m = new Graph_Algo();
-		m.init(this.grp);
+		m.init(this.p.grp);
 
 		JFrame Shortest = new JFrame();
 		String x = JOptionPane.showInputDialog(Shortest, "Enter points / --with spaces ");
@@ -376,8 +396,8 @@ public class graph_gui extends JFrame implements ActionListener, Serializable {
 			}
 			else {
 				for (int i = 0; i < lis.size()-1; i++) {
-					edge_data ed = this.grp.getEdge(lis.get(i).getKey(), lis.get(i+1).getKey());
-					this.grp.getEdge(ed.getSrc(), ed.getDest()).setTag(300);
+					edge_data ed = this.p.grp.getEdge(lis.get(i).getKey(), lis.get(i+1).getKey());
+					this.p.grp.getEdge(ed.getSrc(), ed.getDest()).setTag(300);
 				}
 			}
 		} catch (Exception e) {
