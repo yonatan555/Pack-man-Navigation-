@@ -16,7 +16,7 @@ Point3D pos;
 
 
 public robot() {
-	this.dest=0;
+	this.dest=-1;
 	this.speed=0;
 	this.src=0;
 	this.id=0;
@@ -30,6 +30,13 @@ public int getDest() {
 
 public void setDest(int dest) {
 	this.dest = dest;
+}
+public int getSrc() {
+	return this.src;
+}
+
+public void setSrc(int src) {
+	this.src = src;
 }
 
 public double getValue() {

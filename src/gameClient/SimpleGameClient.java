@@ -59,6 +59,7 @@ public class SimpleGameClient {
 		game.startGame();
 		// should be a Thread!!!
 		while(game.isRunning()) {
+			System.out.println(game.timeToEnd()/1000);
 			moveRobots(game, gg);
 		}
 		String results = game.toString();
