@@ -1,4 +1,4 @@
-package utils;
+package gameClient;
 
 //package stdDraw;
 // https://introcs.cs.princeton.edu/java/stdlib/StdDraw.java.html
@@ -79,7 +79,6 @@ import javax.swing.KeyStroke;
 
 import Server.game_service;
 import dataStructure.node_data;
-import gameClient.graph_gui;
 
 /**
  * The {@code StdDraw} class provides a basic capability for creating drawings
@@ -476,15 +475,24 @@ import gameClient.graph_gui;
  */
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
-	static graph_gui gg;
-	// play play;
+	static MyGameGUI gg;
 	static game_service game;
-	public static void setGraph(graph_gui gg2) {
+	private static boolean isPressed = false; 
+	public static  double x = 0;
+	public static double y = 0;
+	
+	public static void setGraph(MyGameGUI gg2) {
 		gg = gg2;
 	}
-
+	
+	
+	
 	public static void setGame(game_service gg2) {
 		game = gg2;
+	}
+	public StdDraw() {
+		this.x=0;
+		this.y=0;
 	}
 
 	/**
@@ -637,10 +645,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	// set of key codes currently pressed down
 	private static TreeSet<Integer> keysDown = new TreeSet<Integer>();
 
-	// singleton pattern: client can't instantiate
-	private StdDraw() {
-	}
-
+	
 	// static initializer
 	static {
 		init();
@@ -1330,7 +1335,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 * Drawing images.
 	 ***************************************************************************/
 	// get an image from the given filename
-	private static Image getImage(String filename) {
+	public static Image getImage(String filename) {
 		if (filename == null)
 			throw new IllegalArgumentException();
 
@@ -1710,9 +1715,11 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				gg.StartManual(gameNum);
 				t.interrupt();
 			}
+		
 		});
 
 		t.start();
+		
 	}
 
 	/**
@@ -1741,6 +1748,9 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 * @return {@code true} if the mouse is being pressed; {@code false} otherwise
 	 */
 	public static boolean isMousePressed() {
+		
+		
+		
 		synchronized (mouseLock) {
 			return isMousePressed;
 		}
@@ -1780,13 +1790,19 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			return mouseY;
 		}
 	}
+	
 
 	/**
 	 * This method cannot be called directly.
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// this body is intentionally left empty
+//		x = StdDraw.userX(e.getX());
+//		y = StdDraw.userY(e.getY());
+
+		gg.setXandY(StdDraw.userX(e.getX()), StdDraw.userY(e.getY()));
+		
+		
 	}
 
 	/**
@@ -1846,6 +1862,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		synchronized (mouseLock) {
 			mouseX = StdDraw.userX(e.getX());
 			mouseY = StdDraw.userY(e.getY());
+			
 		}
 	}
 

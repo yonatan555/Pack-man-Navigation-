@@ -56,14 +56,14 @@ public class SimpleGameClient {
 			}
 		}
 		catch (JSONException e) {e.printStackTrace();}
-		game.startGame();
+	/*	game.startGame();
 		// should be a Thread!!!
 		while(game.isRunning()) {
 			System.out.println(game.timeToEnd()/1000);
 			moveRobots(game, gg);
 		}
 		String results = game.toString();
-		System.out.println("Game Over: "+results);
+		System.out.println("Game Over: "+results);*/
 	}
 	/** 
 	 * Moves each of the robots along the edge, 

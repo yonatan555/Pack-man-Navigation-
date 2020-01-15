@@ -44,7 +44,7 @@ public class fruit {
 	public int getType() {
 		return this.type;
 	}
-	public int getsrc() {
+	public int getSrc() {
 		return this.src;
 	}
 	public int getdest() {

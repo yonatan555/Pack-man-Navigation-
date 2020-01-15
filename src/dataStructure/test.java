@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import Server.Game_Server;
 import Server.game_service;
 import gameClient.fruit;
-import gameClient.graph_gui;
+import gameClient.MyGameGUI;
 import gameClient.play;
 import gameClient.robot;
 import oop_dataStructure.oop_edge_data;
@@ -19,18 +19,23 @@ import oop_dataStructure.oop_graph;
 public class test {
 
 	public static void main(String[] args) throws JSONException {
-	/*	game_service game = Game_Server.getServer(2);
-		System.out.println(game);
-		game.addRobot(5);
-		game.addRobot(5);
-		System.out.println(game.getRobots());
+	/*game_service game = Game_Server.getServer(2);
 		play p = new play (game);
 		p.locateRobots();
-		for (int i = 0; i < p.rob.size(); i++) {
-			System.out.println(p.rob.get(i).getSrc());
-		}*/
+		for (int i = 0;i < p.fru.size(); i++) {
+			game.addRobot(p.fru.get(i).getSrc());
+		}
+		p.moverob(game);
+		System.out.println(p.rob.get(0).getSrc());
+		game.startGame();
+		while(game.isRunning()) {
+			game.chooseNextEdge(0, 10);
+			game.move();
+		}
+		p.moverob(game);
+		System.out.println(p.rob.get(0).getSrc());*/
 		
-		graph_gui t = new graph_gui();
+		MyGameGUI t = new MyGameGUI();
 		
 	}
 }

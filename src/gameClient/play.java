@@ -18,11 +18,10 @@ import oop_dataStructure.oop_edge_data;
 import oop_dataStructure.oop_graph;
 
 public class play {
-
 	public ArrayList<robot> rob;
 	public ArrayList<fruit> fru;
 	public graph grp;
-
+	public game_service game;
 	public play() {
 		this.rob = new ArrayList<robot>();
 		this.fru = new ArrayList<fruit>();
@@ -40,8 +39,27 @@ public class play {
 		}
 
 		this.grp = new DGraph();
-
+		this.game = game ;
 		((DGraph) this.grp).init(game.getGraph().toString());
+	}
+	
+	
+	
+	
+	
+	public void movefrut(game_service game) throws JSONException {
+		this.fru = new ArrayList<fruit>();
+		for (String fruit1 : game.getFruits()) {
+			fru.add(new fruit(fruit1));
+		}
+	}
+	
+	public void moverob(game_service game) throws JSONException {
+		this.rob = new ArrayList<robot>();
+		for (String ro : game.getRobots()) {
+			rob.add(new robot(ro));
+		}
+		
 	}
 
 	public void locatefruit() throws JSONException {
@@ -96,48 +114,12 @@ public class play {
 
 		}
 	}
+
 	public void locateRobots() throws JSONException {
-		locatefruit();
 		for (int i = 0; i < this.rob.size() && i < this.fru.size(); i++) {
 			this.rob.get(i).setSrc(this.fru.get(i).src);
 		}
 	}
 	
-	public void moveRobots(game_service game) {
-		List<String> log = game.move();
-		if(log!=null) {
-			long t = game.timeToEnd();
-			for(int i=0;i<log.size();i++) {
-				String robot_json = log.get(i);
-				try {
-					JSONObject line = new JSONObject(robot_json);
-					JSONObject ttt = line.getJSONObject("Robot");
-					int rid = ttt.getInt("id");
-					int src = ttt.getInt("src");
-					int dest = ttt.getInt("dest");
-					if(dest==-1) {	
-						dest = nextNode(this.grp, src);
-						game.chooseNextEdge(rid, dest);
-						System.out.println("Turn to node: "+dest+"  time to end:"+(t/1000));
-						System.out.println(ttt);
-					}
-				} 
-				catch (JSONException e) {e.printStackTrace();}
-			}
-		}
-	
-	}
-	
-	private static int nextNode(graph g, int src) {
-		int ans = -1;
-		Collection<edge_data> ee = g.getE(src);
-		Iterator<edge_data> itr = ee.iterator();
-		int s = ee.size();
-		int r = (int)(Math.random()*s);
-		int i=0;
-		while(i<r) {itr.next();i++;}
-		ans = itr.next().getDest();
-		return ans;
-	}
 	
 }
