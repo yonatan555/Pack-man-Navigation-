@@ -477,22 +477,21 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 	static MyGameGUI gg;
 	static game_service game;
-	private static boolean isPressed = false; 
-	public static  double x = 0;
+	private static boolean isPressed = false;
+	public static double x = 0;
 	public static double y = 0;
-	
+
 	public static void setGraph(MyGameGUI gg2) {
 		gg = gg2;
 	}
-	
-	
-	
+
 	public static void setGame(game_service gg2) {
 		game = gg2;
 	}
+
 	public StdDraw() {
-		this.x=0;
-		this.y=0;
+		this.x = 0;
+		this.y = 0;
 	}
 
 	/**
@@ -645,7 +644,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	// set of key codes currently pressed down
 	private static TreeSet<Integer> keysDown = new TreeSet<Integer>();
 
-	
 	// static initializer
 	static {
 		init();
@@ -1708,18 +1706,26 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 	private void Threadforman(String gameNum) {
 		t = new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				gg.StartManual(gameNum);
 				t.interrupt();
 			}
-		
 		});
-
 		t.start();
-		
+	}
+	
+	private void Threadforman1(String gameNum) {
+		t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				gg.StartAuto(gameNum);
+				t.interrupt();
+			}
+		});
+		t.start();
 	}
 
 	/**
@@ -1735,6 +1741,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			Threadforman(gameNum);
 		}
 		if (op.equals("Auto")) {
+			JFrame j = new JFrame();
+			String gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
+			j.dispose();
+			Threadforman1(gameNum);
 		}
 	}
 
@@ -1748,9 +1758,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 * @return {@code true} if the mouse is being pressed; {@code false} otherwise
 	 */
 	public static boolean isMousePressed() {
-		
-		
-		
+
 		synchronized (mouseLock) {
 			return isMousePressed;
 		}
@@ -1790,19 +1798,13 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			return mouseY;
 		}
 	}
-	
 
 	/**
 	 * This method cannot be called directly.
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		x = StdDraw.userX(e.getX());
-//		y = StdDraw.userY(e.getY());
-
 		gg.setXandY(StdDraw.userX(e.getX()), StdDraw.userY(e.getY()));
-		
-		
 	}
 
 	/**
@@ -1862,7 +1864,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		synchronized (mouseLock) {
 			mouseX = StdDraw.userX(e.getX());
 			mouseY = StdDraw.userY(e.getY());
-			
+
 		}
 	}
 
@@ -1958,25 +1960,25 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 * @param args the command-line arguments
 	 */
 	public static void main(String[] args) {
-		StdDraw.square(0.2, 0.8, 0.1);
-		StdDraw.filledSquare(0.8, 0.8, 0.2);
-		StdDraw.circle(0.8, 0.2, 0.2);
-
-		StdDraw.setPenColor(StdDraw.BOOK_RED);
-		StdDraw.setPenRadius(0.02);
-		StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
-
-		// draw a blue diamond
-		StdDraw.setPenRadius();
-		StdDraw.setPenColor(StdDraw.BOOK_BLUE);
-		double[] x = { 0.1, 0.2, 0.3, 0.2 };
-		double[] y = { 0.2, 0.3, 0.2, 0.1 };
-		StdDraw.filledPolygon(x, y);
-		// text
-		StdDraw.setPenColor(StdDraw.BLACK);
-		StdDraw.text(0.2, 0.5, "black text");
-		StdDraw.setPenColor(StdDraw.WHITE);
-		StdDraw.text(0.8, 0.8, "white text");
+//		StdDraw.square(0.2, 0.8, 0.1);
+//		StdDraw.filledSquare(0.8, 0.8, 0.2);
+//		StdDraw.circle(0.8, 0.2, 0.2);
+//
+//		StdDraw.setPenColor(StdDraw.BOOK_RED);
+//		StdDraw.setPenRadius(0.02);
+//		StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
+//
+//		// draw a blue diamond
+//		StdDraw.setPenRadius();
+//		StdDraw.setPenColor(StdDraw.BOOK_BLUE);
+//		double[] x = { 0.1, 0.2, 0.3, 0.2 };
+//		double[] y = { 0.2, 0.3, 0.2, 0.1 };
+//		StdDraw.filledPolygon(x, y);
+//		// text
+//		StdDraw.setPenColor(StdDraw.BLACK);
+//		StdDraw.text(0.2, 0.5, "black text");
+//		StdDraw.setPenColor(StdDraw.WHITE);
+//		StdDraw.text(0.8, 0.8, "white text");
 	}
 
 }
