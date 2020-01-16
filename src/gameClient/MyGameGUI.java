@@ -113,7 +113,6 @@ public class MyGameGUI implements Auto_manual {
 			for (int i = 0; i < count; i++) {
 				game.addRobot(p.fru.get(i).getSrc());
 			}
-			int server = 0;
 			p.movefrut(game);
 			p.moverob(game);
 			initGUI();
@@ -156,7 +155,6 @@ public class MyGameGUI implements Auto_manual {
 						y1 = t.y();
 						sum = Math.sqrt((Math.pow((x - x1), 2)) + (Math.pow((y - y1), 2)));
 						if (sum <= 0.0005) {
-							server = i;
 							game.chooseNextEdge(rb.getId(), p.grp.getNode(i).getKey());
 							x = 0;
 							y = 0;
@@ -352,6 +350,5 @@ public class MyGameGUI implements Auto_manual {
 		}
 		StdDraw.show();
 	}
-
 	
 }
