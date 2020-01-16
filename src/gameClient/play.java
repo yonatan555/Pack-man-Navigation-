@@ -17,11 +17,10 @@ import dataStructure.node_data;
 import oop_dataStructure.oop_edge_data;
 import oop_dataStructure.oop_graph;
 
-public class play {
+public class play implements Plays {
 	public ArrayList<robot> rob;
 	public ArrayList<fruit> fru;
 	public graph grp;
-//	public game_service game;
 	public play() {
 		this.rob = new ArrayList<robot>();
 		this.fru = new ArrayList<fruit>();
@@ -39,24 +38,23 @@ public class play {
 		}
 
 		this.grp = new DGraph();
-	//	this.game = game ;
 		((DGraph) this.grp).init(game.getGraph().toString());
 	}
-	
+	@Override
 	public void movefrut(game_service game) throws JSONException {
 		this.fru = new ArrayList<fruit>();
 		for (String fruit1 : game.getFruits()) {
 			fru.add(new fruit(fruit1));
 		}
 	}
-	
+	@Override
 	public void moverob(game_service game) throws JSONException {
 		this.rob = new ArrayList<robot>();
 		for (String ro : game.getRobots()) {
 			rob.add(new robot(ro));
 		}
 	}
-
+	@Override
 	public void locatefruit() throws JSONException
 	{
 		double eps = 0.00000000001;
@@ -120,9 +118,7 @@ public class play {
 			}
 		}
 	}
-	public void gameauto() {
-		
-	}
+	@Override
 	public void locateRobots() throws JSONException {
 		for (int i = 0; i < this.rob.size() && i < this.fru.size(); i++) {
 			this.rob.get(i).setSrc(this.fru.get(i).src);

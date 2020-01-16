@@ -6,7 +6,7 @@ import org.json.JSONString;
 
 import utils.Point3D;
 
-public class robot implements robotX{
+public class robot implements robotX {
 	int src;
 	int dest;
 	double value;
@@ -14,64 +14,7 @@ public class robot implements robotX{
 	double speed;
 	Point3D pos;
 
-	public robot() {
-		this.dest = -1;
-		this.speed = 0;
-		this.src = 0;
-		this.id = 0;
-		this.pos = Point3D.ORIGIN;
-		this.value = 0;
-	}
-
-	public int getDest() {
-		return dest;
-	}
-
-	public void setDest(int dest) {
-		this.dest = dest;
-	}
-
-	public int getSrc() {
-		return this.src;
-	}
-
-	public void setSrc(int src) {
-		this.src = src;
-	}
-
-	public double getValue() {
-		return value;
-	}
-
-	public void setValue(double value) {
-		this.value = value;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public double getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-
-	public Point3D getPos() {
-		return pos;
-	}
-
-	public void setPos(Point3D pos) {
-		this.pos = pos;
-	}
-	@Override
-	public void robot(String s) throws JSONException {
+	public robot(String s) throws JSONException {
 
 		JSONObject m = new JSONObject(s);
 
@@ -88,8 +31,63 @@ public class robot implements robotX{
 			e.printStackTrace();
 		}
 	}
+	
+	public robot() {
+		this.dest = -1;
+		this.speed = 0;
+		this.src = 0;
+		this.id = 0;
+		this.pos = Point3D.ORIGIN;
+		this.value = 0;
+	}
+	@Override
+	public int getDest() {
+		return dest;
+	}
 
+	public void setDest(int dest) {
+		this.dest = dest;
+	}
+	@Override
+	public int getSrc() {
+		return this.src;
+	}
+
+	public void setSrc(int src) {
+		this.src = src;
+	}
+	@Override
+	public double getValue() {
+		return value;
+	}
+
+	public void setValue(double value) {
+		this.value = value;
+	}
+	@Override
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	@Override
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+	@Override
+	public Point3D getPos() {
+		return pos;
+	}
+
+	public void setPos(Point3D pos) {
+		this.pos = pos;
+	}
 	
 	
-
 }

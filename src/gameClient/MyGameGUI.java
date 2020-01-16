@@ -41,7 +41,7 @@ import utils.Point3D;
 import algorithms.Graph_Algo;
 import algorithms.graph_algorithms;
 
-public class MyGameGUI {
+public class MyGameGUI implements Auto_manual {
 	static String score;
 	static long time = 0;
 	double Min_x = Integer.MAX_VALUE;
@@ -58,7 +58,8 @@ public class MyGameGUI {
 	}
 
 	// find the the min max for resulotion
-	private void set(graph g) {
+	@Override
+	public void set(graph g) {
 		Min_x = Integer.MAX_VALUE;
 		Max_x = Integer.MIN_VALUE;
 		Min_y = Integer.MAX_VALUE;
@@ -79,6 +80,7 @@ public class MyGameGUI {
 		this.Min_y = y[0];
 	}
 
+	@Override
 	public void setXandY(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -88,7 +90,8 @@ public class MyGameGUI {
 	 * init gui
 	 * 
 	 */
-	private void initGUI() {
+	@Override
+	public void initGUI() {
 
 		StdDraw.setCanvasSize(800, 600);
 		if (p != null) {
@@ -99,7 +102,7 @@ public class MyGameGUI {
 			paint();
 		}
 	}
-
+	@Override
 	public void StartManual(String gameNumber) {
 		boolean flag = false;
 		try {
@@ -175,7 +178,7 @@ public class MyGameGUI {
 			e.printStackTrace();
 		}
 	}
-
+	@Override
 	public void StartAuto(String gameNumber) {
 		try {
 			game_service game = Game_Server.getServer(Integer.parseInt(gameNumber));
@@ -232,8 +235,8 @@ public class MyGameGUI {
 		}
 
 	}
-
-	private String showScore(game_service game) throws JSONException {
+	@Override
+	public String showScore(game_service game) throws JSONException {
 
 		JSONObject m = new JSONObject(game.toString());
 		try {
@@ -249,8 +252,8 @@ public class MyGameGUI {
 		return "";
 
 	}
-
-	private int getrobs(game_service game) throws JSONException {
+	@Override
+	public int getrobs(game_service game) throws JSONException {
 		int i = 0;
 
 		JSONObject m = new JSONObject(game.toString());
@@ -271,6 +274,7 @@ public class MyGameGUI {
 	 * paint the wanted graph that entered
 	 * 
 	 */
+	@Override
 	public void paint() {
 		StdDraw.clear();
 		node_data dest = null;
@@ -348,4 +352,6 @@ public class MyGameGUI {
 		}
 		StdDraw.show();
 	}
+
+	
 }

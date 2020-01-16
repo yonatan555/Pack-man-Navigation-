@@ -8,7 +8,7 @@ import Server.game_service;
 import dataStructure.edge_data;
 import utils.Point3D;
 
-public class fruit {
+public class fruit implements fruitX{
 
 	int value;
 	int type;
@@ -37,22 +37,27 @@ public class fruit {
 			e.printStackTrace();
 		}
 	}
-	
+	@Override
 	public int getValue() {
 		return this.value;
 	}
+	@Override
 	public int getType() {
 		return this.type;
 	}
+	@Override
 	public int getSrc() {
 		return this.src;
 	}
+	@Override
 	public int getdest() {
 		return this.dest;
 	}
+	@Override
 	public edge_data getedge() {
 		return this.edge;
 	}
+	@Override
 	public Point3D getPos() {
 		return this.pos;
 	}
@@ -74,5 +79,6 @@ public class fruit {
 	public void setPoint(String s) {
 		this.pos = new Point3D(s);
 	}
+	
 	
 }
