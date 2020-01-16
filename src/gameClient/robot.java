@@ -6,7 +6,7 @@ import org.json.JSONString;
 
 import utils.Point3D;
 
-public class robot {
+public class robot implements robotX{
 	int src;
 	int dest;
 	double value;
@@ -70,8 +70,8 @@ public class robot {
 	public void setPos(Point3D pos) {
 		this.pos = pos;
 	}
-
-	public robot(String s) throws JSONException {
+	@Override
+	public void robot(String s) throws JSONException {
 
 		JSONObject m = new JSONObject(s);
 
@@ -88,5 +88,8 @@ public class robot {
 			e.printStackTrace();
 		}
 	}
+
+	
+	
 
 }
