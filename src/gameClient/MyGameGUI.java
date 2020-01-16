@@ -37,6 +37,7 @@ import dataStructure.NodeData;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
+
 import utils.Point3D;
 import algorithms.Graph_Algo;
 import algorithms.graph_algorithms;
@@ -282,10 +283,14 @@ public class MyGameGUI implements Auto_manual {
 			for (int i = 0; i < p.fru.size(); i++) {
 				if (p.fru.get(i).type == 1) {
 					StdDraw.setPenColor(Color.BLACK);
-					StdDraw.filledCircle(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), 0.0001);
+//					StdDraw.filledCircle(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), 0.0001);
+					StdDraw.picture(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), "apple.jpg",(Max_x-Min_x)*0.05,(Max_x-Min_x)*0.05);
+
 				} else if (p.fru.get(i).type == -1) {
 					StdDraw.setPenColor(Color.GREEN);
-					StdDraw.filledCircle(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), 0.0001);
+					//StdDraw.filledCircle(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), 0.0001);
+					StdDraw.picture(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), "banna.png",(Max_x-Min_x)*0.05,(Max_x-Min_x)*0.05);
+
 				}
 			}
 
@@ -293,7 +298,8 @@ public class MyGameGUI implements Auto_manual {
 				double x = p.rob.get(i).pos.x();
 				double y = p.rob.get(i).pos.y();
 				StdDraw.setPenColor(Color.ORANGE);
-				StdDraw.filledCircle(x, y, 0.0002);
+				//StdDraw.filledCircle(x, y, 0.0002);
+				StdDraw.picture(x, y, "avi.png",(Max_x-Min_x)*0.07,(Max_x-Min_x)*0.07);
 			}
 
 			for (node_data no : this.p.grp.getV()) {
