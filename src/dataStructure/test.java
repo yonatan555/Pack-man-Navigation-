@@ -23,10 +23,28 @@ import utils.Point3D;
 public class test {
 
 	public static void main(String[] args) throws JSONException {
-		game_service game = Game_Server.getServer(2);
-		play p = new play(game);
+//		game_service game = Game_Server.getServer(2);
+//		play p = new play(game);
 		//p.locatefruit();
-		MyGameGUI h = new MyGameGUI(); 
+//		for (int i = 1; i < 24; i++) {
+			MyGameGUI h = new MyGameGUI(); 
+//			h.StartAuto(i+"");
+//		}
+//			MyGameGUI h1 = new MyGameGUI(); 
+//			h1.StartAuto(2+"");
+//			MyGameGUI h2 = new MyGameGUI(); 
+//			h2.StartAuto(3+"");
+//			MyGameGUI h3 = new MyGameGUI(); 
+//			MyGameGUI h4 = new MyGameGUI(); 
+//			MyGameGUI h5 = new MyGameGUI(); 
+//			MyGameGUI h6 = new MyGameGUI(); 
+//			MyGameGUI h7 = new MyGameGUI(); 
+//			MyGameGUI h8 = new MyGameGUI(); 
+//			MyGameGUI h9 = new MyGameGUI(); 
+//			MyGameGUI h = new MyGameGUI(); 
+//			MyGameGUI h = new MyGameGUI(); 
+//			MyGameGUI h = new MyGameGUI(); 
+			
 		/*
 		graph_algorithms t = new Graph_Algo();
 		

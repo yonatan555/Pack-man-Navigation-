@@ -142,14 +142,11 @@ public void setplay(game_service game) throws JSONException {
 				double y1 = 0;
 				double sum = 0;
 				Point3D t = new Point3D(Point3D.ORIGIN);
-				
 				if (!flag) {
-					
 					for (int i = 0; i < p.rob.size(); i++) {
 						t = p.rob.get(i).getPos();
 						x1 = t.x();
 						y1 = t.y();
-						
 						sum = Math.sqrt((Math.pow((x - x1), 2)) + (Math.pow((y - y1), 2)));
 						if (sum <= 0.001) {
 							rb = p.rob.get(i);
@@ -160,7 +157,6 @@ public void setplay(game_service game) throws JSONException {
 							flag = true;
 							break;
 						}
-						
 					}
 				}
 				else 
@@ -174,9 +170,7 @@ public void setplay(game_service game) throws JSONException {
 						y1 = t.y();
 						sum = Math.sqrt((Math.pow((x - x1), 2)) + (Math.pow((y - y1), 2)));
 						if (sum <= 0.001) {
-							
 							game.chooseNextEdge(rb.getId(), p.grp.getNode(i).getKey());
-							
 							x = 0;
 							y = 0;
 							flag = false;
@@ -204,51 +198,8 @@ public void setplay(game_service game) throws JSONException {
 		try {
 			game_service game = Game_Server.getServer(Integer.parseInt(gameNumber));
 			auto v = new auto();
+			v.setgamenumber(Integer.parseInt(gameNumber));
 			v.StartAuto(game);
-			/*p = new play(game);
-			int count = getrobs(game);
-			p.locatefruit();
-			for (int i = 0; i < count; i++) {
-				game.addRobot(p.fru.get(i).getSrc());
-			}
-			p.moverob(game);
-			initGUI();
-			Graph_Algo g = new Graph_Algo(p.grp);
-			game.startGame();
-			while (game.isRunning()) {
-				time = game.timeToEnd() / 1000;
-				List<node_data> l = new ArrayList<node_data>();
-				for (int i = 0, j = 0; i < count && j < p.fru.size(); i++, j++) {
-					System.out.println(p.rob.get(i).getSrc());
-					System.out.println(p.fru.get(j).getdest());
-					if (p.rob.get(i).getSrc() != p.fru.get(j).getdest()) {
-						System.out.println("55555");
-						l = g.shortestPath(p.rob.get(i).getSrc(), p.fru.get(j).getdest());
-						if (l != null) {
-							for (int k = l.size() - 2; k >= 0; k--) {
-								System.out.print(l.get(k).getKey() + ", ");
-								game.chooseNextEdge(i, l.get(k).getKey());
-								p.locatefruit();
-								p.moverob(game);
-								paint();
-
-							}
-							game.move();
-						} else {
-							System.out.println("asd");
-							break;
-						}
-					} else {
-						game.chooseNextEdge(i, p.fru.get(j).getSrc());
-					}
-				}
-				game.move();
-				p.movefrut(game);
-				p.moverob(game);
-				score = showScore(game);
-				p.locatefruit();
-				paint();
-			}*/
 		}
 
 		catch (Exception e) {
