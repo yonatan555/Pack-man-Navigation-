@@ -168,7 +168,6 @@ public void setplay(game_service game) throws JSONException {
 					x1 = 0;
 					y1 = 0;
 					sum = 0;
-
 					for (int i = 0; i < p.grp.getV().size(); i++) {
 						t = p.grp.getNode(i).getLocation();
 						x1 = t.x();
