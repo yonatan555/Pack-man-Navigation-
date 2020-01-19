@@ -24,6 +24,7 @@ public class fruit implements fruitX{
 		this.pos= Point3D.ORIGIN;
 		
 	}
+	// read fro a json file and init to fruit
 	public fruit(String fru) throws JSONException {
 		JSONObject m = new JSONObject(fru);
 		try {
@@ -37,6 +38,8 @@ public class fruit implements fruitX{
 			e.printStackTrace();
 		}
 	}
+	
+	//getters and setters of the class
 	@Override
 	public int getValue() {
 		return this.value;

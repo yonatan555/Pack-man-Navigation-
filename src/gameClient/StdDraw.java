@@ -474,10 +474,10 @@ import dataStructure.node_data;
  * @author Kevin Wayne
  */
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
-
+	
 	static MyGameGUI gg;
 	static game_service game;
-	private static boolean isPressed = false;
+	//private static boolean isPressed = false;
 	public static double x = 0;
 	public static double y = 0;
 
@@ -1702,8 +1702,9 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 	}
 
+	//thread  run the auto/manual request
 	Thread t;
-
+	//for manual
 	private void Threadforman(String gameNum) {
 		t = new Thread(new Runnable() {
 			@Override
@@ -1715,7 +1716,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		});
 		t.start();
 	}
-	
+		//for auto
 	private void Threadforman1(String gameNum) {
 		t = new Thread(new Runnable() {
 			@Override
@@ -1729,22 +1730,50 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	}
 
 	/**
-	 * This method cannot be called directly.
+	 * This method cannot be called directly ,  get commands from the user
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String op = e.getActionCommand();
 		if (op.equals("Manual")) {
+			String num = "";
+			String gameNum ="";
 			JFrame j = new JFrame();
-			String gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
-			j.dispose();
-			Threadforman(gameNum);
+			boolean input = true ;
+			while(input) {
+				 gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
+				 num = gameNum;
+				 int number = Integer.parseInt(num);
+				 if(number <= 23 && number >= 0) {
+						input = false;
+						j.dispose();
+						Threadforman(gameNum);
+					}
+				 else
+				 {
+						JOptionPane.showMessageDialog(j, "Enter value 0-23 ");
+				 }
+			}
 		}
 		if (op.equals("Auto")) {
+			String num = "";
+			String gameNum ="";
 			JFrame j = new JFrame();
-			String gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
-			j.dispose();
-			Threadforman1(gameNum);
+			boolean input = true ;
+			
+			while(input) {
+				 gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
+				num = gameNum;
+				int number = Integer.parseInt(num);
+				if(number <= 23 && number >= 0) {
+					input = false;
+					j.dispose();
+					Threadforman1(gameNum);
+					}
+					else {
+						JOptionPane.showMessageDialog(j, "Enter value 0-23 ");
+					}
+			}	
 		}
 	}
 

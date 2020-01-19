@@ -25,19 +25,19 @@ public class DGraph implements graph, Serializable {
 		this.vertex = new Hashtable<Integer, node_data>();
 		MC++;
 	}
-
+	//get node from the user by key
 	@Override
 	public node_data getNode(int key) {
 		MC++;
 		return vertex.get(key);
 	}
-
+	//get edge from the user by src and dest
 	@Override
 	public edge_data getEdge(int src, int dest) {
 		MC++;
 		return edge.get(getNode(src)).get(dest);
 	}
-
+	// add node to graph by node
 	@Override
 	public void addNode(node_data n) {
 		if (n == null)
@@ -46,7 +46,7 @@ public class DGraph implements graph, Serializable {
 		vertex.put(n.getKey(), n);
 		edge.put(n, new Hashtable<Integer, edge_data>());
 	}
-	
+	//connect 2 nodes to edge
 	@Override
 	public void connect(int src, int dest, double w) {
 		if (w < 0 || src == dest || this.getEdge(src, dest) != null)  
@@ -55,20 +55,20 @@ public class DGraph implements graph, Serializable {
 		edgesNum++;
 		edge.get(vertex.get(src)).put(dest, new EdgeData(src, dest, w));
 	}
-
+	// gte the whole vertexes of the grpah
 	@Override
 	public Collection<node_data> getV() {
 		MC++;
 		return vertex.values();
 	}
-
+	// gte the whole edges of the grpah by specific node
 	@Override
 	public Collection<edge_data> getE(int node_id) {
 		MC++;
 		node_data m = vertex.get(node_id);
 		return edge.get(m).values();
 	}
-
+	//remove node from grpah
 	@Override
 	public node_data removeNode(int key) {
 		if (this.getNode(key) != null) {
@@ -89,7 +89,7 @@ public class DGraph implements graph, Serializable {
 		}
 		throw new RuntimeException("The node is not exist");
 	}
-
+	//remove edge from grpah	
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		MC++;
@@ -97,23 +97,24 @@ public class DGraph implements graph, Serializable {
 		return edge.get(getNode(src)).remove(dest);
 	}
 
+	//return the size of nodes
 	@Override
 	public int nodeSize() {
 		MC++;
 		return this.vertex.size();
 	}
-
+	//return the size of edges
 	@Override
 	public int edgeSize() {
 		MC++;
 		return edgesNum;
 	}
-
+	//num of actions that executed at grpah
 	@Override
 	public int getMC() {
 		return this.MC;
 	}
-
+	//copyobject
 	public DGraph copy() {
 		if (this == null)
 			return null;
@@ -143,7 +144,7 @@ public class DGraph implements graph, Serializable {
 		}
 		return m;
 	}
-
+//init a grpah from the server
 	public void init(String g) throws JSONException {
 		
 		

@@ -18,15 +18,19 @@ import oop_dataStructure.oop_edge_data;
 import oop_dataStructure.oop_graph;
 
 public class play implements Plays {
+	
 	public ArrayList<robot> rob;
 	public ArrayList<fruit> fru;
 	public graph grp;
+	
 	public play() {
 		this.rob = new ArrayList<robot>();
 		this.fru = new ArrayList<fruit>();
 		this.grp = null;
 	}
-
+	
+	
+	// get information from the server and init all objects of the class (and go to each objcet and initlize it )
 	public play(game_service game) throws JSONException {
 		this.fru = new ArrayList<fruit>();
 		for (String fruit1 : game.getFruits()) {
@@ -40,6 +44,9 @@ public class play implements Plays {
 		this.grp = new DGraph();
 		((DGraph) this.grp).init(game.getGraph().toString());
 	}
+	
+	
+	///move the fruits on grpah and update them 
 	@Override
 	public void movefrut(game_service game) throws JSONException {
 		this.fru = new ArrayList<fruit>();
@@ -47,6 +54,7 @@ public class play implements Plays {
 			fru.add(new fruit(fruit1));
 		}
 	}
+	///move the roobot at grpah and update them 
 	@Override
 	public void moverob(game_service game) throws JSONException {
 		this.rob = new ArrayList<robot>();
@@ -55,6 +63,7 @@ public class play implements Plays {
 		}
 	}
 	@Override
+	// locate the fruits on the grpah
 	public void locatefruit() throws JSONException
 	{
 		double eps = 0.00000000001;
@@ -118,6 +127,7 @@ public class play implements Plays {
 			}
 		}
 	}
+	//locate thee robot on the grpah where the closest place ti fruits
 	@Override
 	public void locateRobots() throws JSONException {
 		for (int i = 0; i < this.rob.size() && i < this.fru.size(); i++) {

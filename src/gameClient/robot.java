@@ -13,7 +13,7 @@ public class robot implements robotX {
 	int id;
 	double speed;
 	Point3D pos;
-
+	// read fro a json file and init to fruit
 	public robot(String s) throws JSONException {
 
 		JSONObject m = new JSONObject(s);
@@ -40,6 +40,7 @@ public class robot implements robotX {
 		this.pos = Point3D.ORIGIN;
 		this.value = 0;
 	}
+	//getters and setters of the class
 	@Override
 	public int getDest() {
 		return dest;

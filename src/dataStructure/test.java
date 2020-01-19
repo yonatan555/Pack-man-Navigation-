@@ -27,7 +27,7 @@ public class test {
 		play p = new play(game);
 		//p.locatefruit();
 		MyGameGUI h = new MyGameGUI();
-		
+		/*
 		graph_algorithms t = new Graph_Algo();
 		
 		DGraph temp = new DGraph();
@@ -64,7 +64,7 @@ public class test {
 		for (int i = lis.size()-2; i >= 0; i--) {
 			//System.out.print(lis.get(i).getKey()+" ");
 		}
-		
+		*/
 		
 	}
 }

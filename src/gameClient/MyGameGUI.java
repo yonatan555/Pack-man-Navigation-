@@ -43,15 +43,29 @@ import algorithms.Graph_Algo;
 import algorithms.graph_algorithms;
 
 public class MyGameGUI implements Auto_manual {
+	
 	static String score;
 	static long time = 0;
+	
 	double Min_x = Integer.MAX_VALUE;
 	double Max_x = Integer.MIN_VALUE;
 	double Min_y = Integer.MAX_VALUE;
 	double Max_y = Integer.MIN_VALUE;
+	
 	play p;
+	auto a;
 	double x;
 	double y;
+	
+public MyGameGUI(graph gr) {
+	set(gr);
+	initGUI();
+	StdDraw.setGraph(this);
+	
+}
+public void setplay(game_service game) throws JSONException {
+	this.p=new play(game);
+}
 
 	public MyGameGUI() {
 		initGUI();
@@ -103,6 +117,8 @@ public class MyGameGUI implements Auto_manual {
 			paint();
 		}
 	}
+	
+	//manual function , that called from the window by the user
 	@Override
 	public void StartManual(String gameNumber) {
 		boolean flag = false;
@@ -136,7 +152,6 @@ public class MyGameGUI implements Auto_manual {
 							rb = p.rob.get(i);
 							x = 0;
 							y = 0;
-							// game.move();
 							p.movefrut(game);
 							p.moverob(game);
 							flag = true;
@@ -144,8 +159,8 @@ public class MyGameGUI implements Auto_manual {
 						}
 					}
 				}
-
-				else {
+				else 
+				{
 					x1 = 0;
 					y1 = 0;
 					sum = 0;
@@ -166,7 +181,6 @@ public class MyGameGUI implements Auto_manual {
 						}
 					}
 				}
-
 				game.move();
 				p.movefrut(game);
 				p.moverob(game);
@@ -177,11 +191,16 @@ public class MyGameGUI implements Auto_manual {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	// auto action that used by the usser 
 	@Override
 	public void StartAuto(String gameNumber) {
 		try {
 			game_service game = Game_Server.getServer(Integer.parseInt(gameNumber));
-			p = new play(game);
+			auto v = new auto();
+			v.StartAuto(game);
+			/*p = new play(game);
 			int count = getrobs(game);
 			p.locatefruit();
 			for (int i = 0; i < count; i++) {
@@ -195,7 +214,6 @@ public class MyGameGUI implements Auto_manual {
 				time = game.timeToEnd() / 1000;
 				List<node_data> l = new ArrayList<node_data>();
 				for (int i = 0, j = 0; i < count && j < p.fru.size(); i++, j++) {
-
 					System.out.println(p.rob.get(i).getSrc());
 					System.out.println(p.fru.get(j).getdest());
 					if (p.rob.get(i).getSrc() != p.fru.get(j).getdest()) {
@@ -225,8 +243,7 @@ public class MyGameGUI implements Auto_manual {
 				score = showScore(game);
 				p.locatefruit();
 				paint();
-
-			}
+			}*/
 		}
 
 		catch (Exception e) {
@@ -234,6 +251,8 @@ public class MyGameGUI implements Auto_manual {
 		}
 
 	}
+	
+	// show the score on the window that opened by specific senario
 	@Override
 	public String showScore(game_service game) throws JSONException {
 
@@ -251,6 +270,8 @@ public class MyGameGUI implements Auto_manual {
 		return "";
 
 	}
+	
+	//get robs from the server and return the num of them
 	@Override
 	public int getrobs(game_service game) throws JSONException {
 		int i = 0;
@@ -264,31 +285,28 @@ public class MyGameGUI implements Auto_manual {
 		}
 		return i;
 	}
-
+	
 	public play getPlay() {
 		return this.p;
 	}
 
 	/**
-	 * paint the wanted graph that entered
+	 * paint the wanted graph that entered 
 	 * 
 	 */
 	@Override
-	public void paint() {
+	public  void paint() {
 		StdDraw.clear();
 		node_data dest = null;
 		DecimalFormat df = new DecimalFormat("#.##");
 		if (this.p != null && this.p.grp != null) {
-			// System.out.println("22");
 			for (int i = 0; i < p.fru.size(); i++) {
 				if (p.fru.get(i).type == 1) {
 					StdDraw.setPenColor(Color.BLACK);
-//					StdDraw.filledCircle(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), 0.0001);
 					StdDraw.picture(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), "apple.jpg",(Max_x-Min_x)*0.05,(Max_x-Min_x)*0.05);
 
 				} else if (p.fru.get(i).type == -1) {
 					StdDraw.setPenColor(Color.GREEN);
-					//StdDraw.filledCircle(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), 0.0001);
 					StdDraw.picture(p.fru.get(i).pos.x(), p.fru.get(i).pos.y(), "banna.png",(Max_x-Min_x)*0.05,(Max_x-Min_x)*0.05);
 
 				}
@@ -298,8 +316,7 @@ public class MyGameGUI implements Auto_manual {
 				double x = p.rob.get(i).pos.x();
 				double y = p.rob.get(i).pos.y();
 				StdDraw.setPenColor(Color.ORANGE);
-				//StdDraw.filledCircle(x, y, 0.0002);
-				StdDraw.picture(x, y, "avi.png",(Max_x-Min_x)*0.07,(Max_x-Min_x)*0.07);
+				StdDraw.picture(x, y, "packman.jfif",(Max_x-Min_x)*0.0198,(Max_x-Min_x)*0.0159);
 			}
 
 			for (node_data no : this.p.grp.getV()) {
@@ -307,10 +324,6 @@ public class MyGameGUI implements Auto_manual {
 				StdDraw.filledCircle(no.getLocation().x(), no.getLocation().y(), 0.0001); // draw src point
 				StdDraw.setFont(new Font("TimesRoman", Font.PLAIN, 20)); // set the font of the oval
 				StdDraw.text(no.getLocation().x() + 0.00001, no.getLocation().y() + 0.0002, "" + no.getKey()); // draw
-				// the
-				// num // of
-				// src
-				// point
 
 				for (edge_data ed : this.p.grp.getE(no.getKey())) {
 					dest = this.p.grp.getNode(ed.getDest());
@@ -356,5 +369,4 @@ public class MyGameGUI implements Auto_manual {
 		}
 		StdDraw.show();
 	}
-	
 }
