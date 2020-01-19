@@ -26,7 +26,7 @@ public class test {
 		game_service game = Game_Server.getServer(2);
 		play p = new play(game);
 		//p.locatefruit();
-		MyGameGUI h = new MyGameGUI();
+		MyGameGUI h = new MyGameGUI(); 
 		/*
 		graph_algorithms t = new Graph_Algo();
 		
