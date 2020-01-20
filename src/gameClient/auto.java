@@ -98,7 +98,7 @@ public  void StartAuto(game_service game) {
 		threadForKML(game);
 		long time0 = game.timeToEnd();	
 		while (game.isRunning()) {
-			if(time0 - game.timeToEnd() > 35) game.move();
+			if(time0 - game.timeToEnd() > 30) game.move();
 			MyGameGUI.time = game.timeToEnd() / 1000;
 			List<node_data> l = new ArrayList<node_data>();
 			for (int i = 0, j = 0; i < count && j < gui.p.fru.size(); i++, j++) {

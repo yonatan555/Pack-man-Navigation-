@@ -24,17 +24,8 @@ public class test {
 
 	public static void main(String[] args) throws JSONException {
 
-			//MyGameGUI h = new MyGameGUI(); 
-		game_service game = Game_Server.getServer(0);	
-		int i =0;
-		for (String k: game.getFruits()) {
-			fruit frut = new fruit(k);
-			i++;
-			int value = frut.getValue();
-			int type= frut.getType();
-			Point3D po = frut.getPos();
-			System.out.println("value: "+ value + " type: " + type + " po: " +" x " +po.x() +" y: " + po.y()  );
-		}
+			MyGameGUI h = new MyGameGUI(); 
+		
 		
 		
 				
