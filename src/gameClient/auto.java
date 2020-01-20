@@ -77,6 +77,7 @@ public int getrobs(game_service game) throws JSONException {
 //algoritem for thee automaticly mode
 public  void StartAuto(game_service game) {
 	try {
+		
 		p = new play(game);
 		int count = getrobs(game);
 		MyGameGUI gui = new MyGameGUI(p.grp);
