@@ -33,15 +33,17 @@ public class KML_Logger {
 	graph grp;
 	Kml km;
 	Document file;
-
+	
+	
+	//setter
 	public KML_Logger(graph g) {
 		this.grp = g;
 	}
-
+	//setter 
 	public void setGame(game_service game) {
 		this.game = game;
 	}
-
+	//build the graph from a game to Kml file
 	public void BuildGraph() {
 		km = new Kml();
 		file = km.createAndSetDocument().withName("KML").withOpen(true); // crate a file withname kml
@@ -83,7 +85,7 @@ public class KML_Logger {
 		}
 
 	}
-
+	//sace to file kml
 	public void save(String fileName) {
 		try {
 			km.marshal(new File(fileName));
@@ -91,7 +93,7 @@ public class KML_Logger {
 			e.printStackTrace();
 		}
 	}
-
+	//init frutis to a kml file
 	public void setFruits(String time, String end) {
 		Icon iconGreen = new Icon().withHref("http://maps.google.com/mapfiles/kml/shapes/snowflake_simple.png");
 		Style greenStyle = file.createAndAddStyle();
@@ -127,7 +129,7 @@ public class KML_Logger {
 			}
 		}
 	}
-
+	//init robot to kml file
 	public void setBots(String time, String end) {
 		Icon BusIcon = new Icon().withHref("http://maps.google.com/mapfiles/kml/shapes/man.png");
 		Style busStyle = file.createAndAddStyle();

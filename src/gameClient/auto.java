@@ -18,12 +18,20 @@ int numbergame;
 play p;
 KML_Logger kmlLog;
 
-
-
+//consturctor
+public auto() {
+	this.kmlLog =null;
+	this.p= null;
+	this.numbergame= 0;
+	
+}
+//setter
 public void setgamenumber(int sen) {
 	this.numbergame=  sen;
 }
 
+
+//threadforkml
 Thread t;
 public void threadForKML(game_service game)
 {
@@ -52,7 +60,7 @@ public void threadForKML(game_service game)
 	});
 	t.start();
 }
-
+//getting the num of robots
 public int getrobs(game_service game) throws JSONException {
 	int i = 0;
 
@@ -66,7 +74,7 @@ public int getrobs(game_service game) throws JSONException {
 	return i;
 }
 
-
+//algoritem for thee automaticly mode
 public  void StartAuto(game_service game) {
 	try {
 		p = new play(game);
@@ -118,12 +126,12 @@ public  void StartAuto(game_service game) {
 		}
 		kmlLog.save("data/"+numbergame+".kml");
 	}
-
 	catch (Exception e) {
 		e.printStackTrace();
 	}
 
 }
+//show the score on the monitor
 public String showScore(game_service game) throws JSONException {
 
 	JSONObject m = new JSONObject(game.toString());
