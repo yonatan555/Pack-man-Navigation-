@@ -474,10 +474,10 @@ import dataStructure.node_data;
  * @author Kevin Wayne
  */
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
-	
+
 	static MyGameGUI gg;
 	static game_service game;
-	//private static boolean isPressed = false;
+	// private static boolean isPressed = false;
 	public static double x = 0;
 	public static double y = 0;
 
@@ -1702,9 +1702,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 	}
 
-	//thread  run the auto/manual request
+	// thread run the auto/manual request
 	Thread t;
-	//for manual
+
+	// for manual
 	private void Threadforman(String gameNum) {
 		t = new Thread(new Runnable() {
 			@Override
@@ -1716,7 +1717,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		});
 		t.start();
 	}
-		//for auto
+
+	// for auto
 	private void Threadforman1(String gameNum) {
 		t = new Thread(new Runnable() {
 			@Override
@@ -1730,50 +1732,47 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	}
 
 	/**
-	 * This method cannot be called directly ,  get commands from the user
+	 * This method cannot be called directly , get commands from the user
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String op = e.getActionCommand();
 		if (op.equals("Manual")) {
 			String num = "";
-			String gameNum ="";
+			String gameNum = "";
 			JFrame j = new JFrame();
-			boolean input = true ;
-			while(input) {
-				 gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
-				 num = gameNum;
-				 int number = Integer.parseInt(num);
-				 if(number <= 23 && number >= 0) {
-						input = false;
-						j.dispose();
-						Threadforman(gameNum);
-					}
-				 else
-				 {
-						JOptionPane.showMessageDialog(j, "Enter value 0-23 ");
-				 }
+			boolean input = true;
+			while (input) {
+				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
+				num = gameNum;
+				int number = Integer.parseInt(num);
+				if (number <= 23 && number >= 0) {
+					input = false;
+					j.dispose();
+					Threadforman(gameNum);
+				} else {
+					JOptionPane.showMessageDialog(j, "Enter value 0-23 ");
+				}
 			}
 		}
 		if (op.equals("Auto")) {
 			String num = "";
-			String gameNum ="";
+			String gameNum = "";
 			JFrame j = new JFrame();
-			boolean input = true ;
-			
-			while(input) {
-				 gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
+			boolean input = true;
+
+			while (input) {
+				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
 				num = gameNum;
 				int number = Integer.parseInt(num);
-				if(number <= 23 && number >= 0) {
+				if (number <= 23 && number >= 0) {
 					input = false;
 					j.dispose();
 					Threadforman1(gameNum);
-					}
-					else {
-						JOptionPane.showMessageDialog(j, "Enter value 0-23 ");
-					}
-			}	
+				} else {
+					JOptionPane.showMessageDialog(j, "Enter value 0-23 ");
+				}
+			}
 		}
 	}
 
@@ -1989,25 +1988,25 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 * @param args the command-line arguments
 	 */
 	public static void main(String[] args) {
-//		StdDraw.square(0.2, 0.8, 0.1);
-//		StdDraw.filledSquare(0.8, 0.8, 0.2);
-//		StdDraw.circle(0.8, 0.2, 0.2);
-//
-//		StdDraw.setPenColor(StdDraw.BOOK_RED);
-//		StdDraw.setPenRadius(0.02);
-//		StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
-//
-//		// draw a blue diamond
-//		StdDraw.setPenRadius();
-//		StdDraw.setPenColor(StdDraw.BOOK_BLUE);
-//		double[] x = { 0.1, 0.2, 0.3, 0.2 };
-//		double[] y = { 0.2, 0.3, 0.2, 0.1 };
-//		StdDraw.filledPolygon(x, y);
-//		// text
-//		StdDraw.setPenColor(StdDraw.BLACK);
-//		StdDraw.text(0.2, 0.5, "black text");
-//		StdDraw.setPenColor(StdDraw.WHITE);
-//		StdDraw.text(0.8, 0.8, "white text");
+		// StdDraw.square(0.2, 0.8, 0.1);
+		// StdDraw.filledSquare(0.8, 0.8, 0.2);
+		// StdDraw.circle(0.8, 0.2, 0.2);
+		//
+		// StdDraw.setPenColor(StdDraw.BOOK_RED);
+		// StdDraw.setPenRadius(0.02);
+		// StdDraw.arc(0.8, 0.2, 0.1, 200, 45);
+		//
+		// // draw a blue diamond
+		// StdDraw.setPenRadius();
+		// StdDraw.setPenColor(StdDraw.BOOK_BLUE);
+		// double[] x = { 0.1, 0.2, 0.3, 0.2 };
+		// double[] y = { 0.2, 0.3, 0.2, 0.1 };
+		// StdDraw.filledPolygon(x, y);
+		// // text
+		// StdDraw.setPenColor(StdDraw.BLACK);
+		// StdDraw.text(0.2, 0.5, "black text");
+		// StdDraw.setPenColor(StdDraw.WHITE);
+		// StdDraw.text(0.8, 0.8, "white text");
 	}
 
 }
