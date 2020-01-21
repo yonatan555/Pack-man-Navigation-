@@ -42,7 +42,7 @@ public class Ex4_Client implements Runnable{
 	@Override
 	public void run() {
 		int scenario_num = 0; // current "stage is 9, can play[0,9], can NOT 10 or above
-		int id = 999;
+		int id = 206087702;
 		Game_Server.login(id);
 		game_service game = Game_Server.getServer(scenario_num); // you have [0,23] games
 		
@@ -72,8 +72,9 @@ public class Ex4_Client implements Runnable{
 			}
 		}
 		String res = game.toString();
-		String remark = "This string should be a KML file!!";
-		game.sendKML(remark); // Should be your KML (will not work on case -1).
+		String remark = SimpleDB.getKML(206087702, 0);
+		game.sendKML(remark); 						// Should be your KML (will not work on case -1).
+		System.out.println(game.sendKML(remark));
 		System.out.println(res);
 	}
 	/** 

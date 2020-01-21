@@ -29,6 +29,7 @@ import de.micromata.opengis.kml.v_2_2_0.TimeStamp;
 import utils.Point3D;
 
 public class KML_Logger {
+	
 	game_service game;
 	graph grp;
 	Kml km;

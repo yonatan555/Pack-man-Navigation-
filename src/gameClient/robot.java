@@ -7,12 +7,14 @@ import org.json.JSONString;
 import utils.Point3D;
 
 public class robot implements robotX {
+	
 	int src;
 	int dest;
 	double value;
 	int id;
 	double speed;
 	Point3D pos;
+	
 	// read fro a json file and init to fruit
 	public robot(String s) throws JSONException {
 

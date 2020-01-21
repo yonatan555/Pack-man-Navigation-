@@ -14,139 +14,163 @@ import dataStructure.node_data;
 
 public class auto {
 
-int numbergame;
-play p;
-KML_Logger kmlLog;
-
-//consturctor
-public auto() {
-	this.kmlLog =null;
-	this.p= null;
-	this.numbergame= 0;
 	
-}
-//setter
-public void setgamenumber(int sen) {
-	this.numbergame=  sen;
-}
+	int numbergame;
+	play p;
+	KML_Logger kmlLog;
 
+	// consturctor
+	public auto() {
+		this.kmlLog = null;
+		this.p = null;
+		this.numbergame = 0;
 
-//threadforkml
-Thread t;
-public void threadForKML(game_service game)
-{
-	t = new Thread(new Runnable() {
-		
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			while(game.isRunning())
-			{
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				String time = java.time.LocalDate.now()+"T"+java.time.LocalTime.now();
-				LocalTime end = java.time.LocalTime.now(); 
-				end = end.plusNanos(100*1000000);
-				String endTime = java.time.LocalDate.now()+"T"+end;
-				kmlLog.setFruits(time , endTime);
-				kmlLog.setBots(time , endTime);
-				
-			}
-		}
-	});
-	t.start();
-}
-//getting the num of robots
-public int getrobs(game_service game) throws JSONException {
-	int i = 0;
-
-	JSONObject m = new JSONObject(game.toString());
-	try {
-		JSONObject ro = m.getJSONObject("GameServer");
-		i = ro.getInt("robots");
-	} catch (Exception e) {
-		e.printStackTrace();
 	}
-	return i;
-}
+	
 
-//algoritem for thee automaticly mode
-public  void StartAuto(game_service game) {
-	try {
-		
-		p = new play(game);
-		int count = getrobs(game);
-		MyGameGUI gui = new MyGameGUI(p.grp);
-		gui.setplay(game);
-		gui.initGUI();
-		gui.p.locatefruit();
-		for (int i = 0; i < count; i++)
-		{
-			game.addRobot(gui.p.fru.get(i).getSrc());
-		}
-		
-		gui.p.moverob(game);
-		Graph_Algo g = new Graph_Algo(gui.p.grp);
-		game.startGame();
-		kmlLog = new KML_Logger(p.grp);
-		kmlLog.BuildGraph();
-		kmlLog.setGame(game);
-		threadForKML(game);
-		long time0 = game.timeToEnd();	
-		while (game.isRunning()) {
-			if(time0 - game.timeToEnd() > 30) game.move();
-			MyGameGUI.time = game.timeToEnd() / 1000;
-			List<node_data> l = new ArrayList<node_data>();
-			for (int i = 0, j = 0; i < count && j < gui.p.fru.size(); i++, j++) {
-				if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(j).getdest()) {
-					l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
-					if (l != null) {
-						for (int k = l.size() - 2; k >= 0; k--) {
-							game.chooseNextEdge(i, l.get(k).getKey());
-							gui.p.locatefruit();
-							gui.p.moverob(game);
-							gui.paint();
-						}
-					} else {
-						break;
+	// setter
+	public void setgamenumber(int sen) {
+		this.numbergame = sen;
+	}
+
+	// threadforkml
+	Thread t;
+
+	public void threadForKML(game_service game) {
+		t = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while (game.isRunning()) {
+					try {
+						Thread.sleep(99);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} else {
-					game.chooseNextEdge(i, gui.p.fru.get(j).getSrc());
+
+					String time = java.time.LocalDate.now() + "T" + java.time.LocalTime.now();
+					LocalTime end = java.time.LocalTime.now();
+					end = end.plusNanos(100 * 1000000);
+					String endTime = java.time.LocalDate.now() + "T" + end;
+					kmlLog.setFruits(time, endTime);
+					kmlLog.setBots(time, endTime);
+
 				}
 			}
-			
-			gui.p.movefrut(game);
-			gui.p.moverob(game);
-			MyGameGUI.score = showScore(game);
-			gui.p.locatefruit();
-			gui.paint();
+		});
+		t.start();
+	}
+
+	// getting the num of robots
+	public int getrobs(game_service game) throws JSONException {
+		int i = 0;
+
+		JSONObject m = new JSONObject(game.toString());
+		try {
+			JSONObject ro = m.getJSONObject("GameServer");
+			i = ro.getInt("robots");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		kmlLog.save("data/"+numbergame+".kml");
-	}
-	catch (Exception e) {
-		e.printStackTrace();
+		return i;
 	}
 
-}
-//show the score on the monitor
-public String showScore(game_service game) throws JSONException {
+	// algoritem for thee automaticly mode
+	public void StartAuto(game_service game) {
+		try {
+	
+			Game_Server.login(206087702);
+			System.out.println(game.toString());
+			p = new play(game);
+			int count = getrobs(game);
+			MyGameGUI gui = new MyGameGUI(p.grp);
+			gui.setplay(game);
+			gui.initGUI();
+			gui.p.locatefruit();
+			for (int i = 0; i < count; i++) {
+				game.addRobot(gui.p.fru.get(i).getSrc());
+			}
+			gui.p.moverob(game);
+			Graph_Algo g = new Graph_Algo(gui.p.grp);
+			double sum = 0;
+			double min = 1000;
+			int fru = 0;
+			game.startGame();
+			long time_l = game.timeToEnd();
+			while (game.isRunning()) {
+				if (time_l - game.timeToEnd() > 50) {
+					game.move();
+					time_l = game.timeToEnd();
+				}
+				// game.move();
+				MyGameGUI.time = game.timeToEnd() / 1000;
+				List<node_data> l = new ArrayList<node_data>();
+				for (int i = 0; i < count; i++) {
+					for (int j = 0; j < gui.p.fru.size(); j++) {
+						// if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(j).getdest()) {
+						sum = g.shortestPathDist(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
+						// System.out.println(sum);
+						if (sum <= min) {
+							// System.out.println(j);
+							fru = j;
+							min = sum;
+						}
+						// }
+					}
+					if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(fru).getdest()) {
+						l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(fru).getdest());
+						// System.out.println("i= "+i+" j= "+fru);
+						// System.out.println(gui.p.rob.get(i).getSrc()+"
+						// "+gui.p.fru.get(fru).getdest());
+						if (l != null) {
+							for (int k = l.size() - 2; k >= 0; k--) {
+								game.chooseNextEdge(i, l.get(k).getKey());
+								gui.p.locatefruit();
+								gui.p.moverob(game);
+								gui.paint();
 
-	JSONObject m = new JSONObject(game.toString());
-	try {
+							}
+						} else
+							break;
+					} else
+						game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
+					// System.out.println("asdasd"+gui.p.fru.get(fru).getSrc());
+					min = 1000;
+					// game.move();
+				}
+				gui.p.movefrut(game);
+				gui.p.moverob(game);
+				MyGameGUI.score = showScore(game);
+				gui.p.locatefruit();
+				gui.paint();
 
-		JSONObject ro = m.getJSONObject("GameServer");
-		int grade = ro.getInt("grade");
-		int moves = ro.getInt("moves");
-	MyGameGUI.score = "grade: " + grade + "moves :" + moves;
-		return MyGameGUI.score;
-	} catch (Exception e) {
-		e.printStackTrace();
+			}
+			System.out.println(game.toString());
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
-	return "";
 
-}
+	// show the score on the monitor
+	public String showScore(game_service game) throws JSONException {
+
+		JSONObject m = new JSONObject(game.toString());
+		try {
+
+			JSONObject ro = m.getJSONObject("GameServer");
+			int grade = ro.getInt("grade");
+			int moves = ro.getInt("moves");
+			MyGameGUI.score = "grade: " + grade + "moves :" + moves;
+			return MyGameGUI.score;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+
+	}
 }

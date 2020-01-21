@@ -29,6 +29,10 @@ import javax.swing.KeyStroke;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+
+//import com.sun.security.ntlm.Server;
+
 import Server.Game_Server;
 import Server.game_service;
 import dataStructure.DGraph;
@@ -46,12 +50,10 @@ public class MyGameGUI implements Auto_manual {
 	
 	static String score;
 	static long time = 0;
-	
 	double Min_x = Integer.MAX_VALUE;
 	double Max_x = Integer.MIN_VALUE;
 	double Min_y = Integer.MAX_VALUE;
 	double Max_y = Integer.MIN_VALUE;
-	
 	play p;
 	auto a;
 	double x;
@@ -60,14 +62,13 @@ public class MyGameGUI implements Auto_manual {
 public MyGameGUI(graph gr) {
 	set(gr);
 	initGUI();
-	StdDraw.setGraph(this);
-	
+	StdDraw.setGraph(this);	
 }
 public void setplay(game_service game) throws JSONException {
 	this.p=new play(game);
 }
-
 	public MyGameGUI() {
+		//Game_Server.login(206087702);
 		initGUI();
 		StdDraw.setGraph(this);
 	}
@@ -107,7 +108,6 @@ public void setplay(game_service game) throws JSONException {
 	 */
 	@Override
 	public void initGUI() {
-
 		StdDraw.setCanvasSize(800, 600);
 		if (p != null) {
 			set(p.grp);

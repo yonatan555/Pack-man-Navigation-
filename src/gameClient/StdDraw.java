@@ -61,7 +61,14 @@ import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
@@ -77,6 +84,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import Server.Game_Server;
 import Server.game_service;
 import dataStructure.node_data;
 
@@ -474,13 +482,15 @@ import dataStructure.node_data;
  * @author Kevin Wayne
  */
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
-
+	static int numOfGames = 0;
+	static String bestscore= "";
+	static int CurrentLevel = 0;
 	static MyGameGUI gg;
 	static game_service game;
 	// private static boolean isPressed = false;
 	public static double x = 0;
 	public static double y = 0;
-
+	
 	public static void setGraph(MyGameGUI gg2) {
 		gg = gg2;
 	}
@@ -728,13 +738,25 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		JMenu menu = new JMenu("Menu");
 		menuBar.add(menu);
 
+		JMenu menu1 = new JMenu("Info");
+		menuBar.add(menu1);
+		
 		JMenuItem item2 = new JMenuItem("Auto");
 		item2.addActionListener(std);
 		menu.add(item2);
 		JMenuItem item3 = new JMenuItem("Manual");
 		item3.addActionListener(std);
 		menu.add(item3);
-
+		
+		JMenuItem item4 = new JMenuItem("InfoUser");
+		item4.addActionListener(std);
+		menu1.add(item4);
+		JMenuItem item5 = new JMenuItem("Place");
+		item5.addActionListener(std);
+		menu1.add(item5);
+		
+		
+		
 		return menuBar;
 	}
 
@@ -1774,8 +1796,57 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				}
 			}
 		}
+		if (op.equals("InfoUser")) {
+			JFrame j = new JFrame();
+			Game_Server.login(206087702);
+			numOfGames = getNumOfGames();
+			
+			//bestscore = bestScore();
+			String s = "NumOfGames: " + numOfGames + "\n"+"The current game: " + CurrentLevel+ "\n"+ bestscore;
+			JOptionPane.showMessageDialog(j,s);	
+			
+			
+		}
+		if (op.equals("Place")) {
+			
+		}
+	
 	}
+	/*private String bestScore() {
+		String s= "";
+		int scores [][] =  new int [12][2];
+		Hashtable<Integer, Integer> STO = new Hashtable<>();
+		for()
+		Hashtable<Integer, int[][]> 
+		return null;
+	}*/
 
+	public static int getNumOfGames() {
+		int counter = 0;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser, SimpleDB.jdbcUserPassword);
+			Statement statement = connection.createStatement();
+			String allCustomersQuery = "SELECT * FROM Logs;";
+			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
+				while (resultSet.next()) {
+				if (resultSet.getInt("UserID") == 206087702 || resultSet.getInt("UserID") == 301912531) {/// add ahmad id 
+					counter++;
+					CurrentLevel = resultSet.getInt("levelID") ;
+				}
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+		}
+		catch (SQLException sqle) {
+			System.out.println("SQLException: " + sqle.getMessage());
+			System.out.println("Vendor Error: " + sqle.getErrorCode());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return counter;
+	}
 	/***************************************************************************
 	 * Mouse interactions.
 	 ***************************************************************************/
