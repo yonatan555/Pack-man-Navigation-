@@ -1766,6 +1766,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			boolean input = true;
 			while (input) {
 				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
+				if(gameNum==null || gameNum.equals("")) break;
 				num = gameNum;
 				int number = Integer.parseInt(num);
 				if (number <= 23 && number >= 0) {
@@ -1785,6 +1786,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 			while (input) {
 				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
+				if(gameNum==null || gameNum.equals("")) break;
 				num = gameNum;
 				int number = Integer.parseInt(num);
 				if (number <= 23 && number >= 0) {
