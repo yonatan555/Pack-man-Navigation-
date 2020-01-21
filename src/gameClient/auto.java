@@ -134,6 +134,7 @@ public class auto {
 								time_l=game.timeToEnd();
 							}	
 				}
+				int a=0;
 				gui.p.movefrut(game);
 				gui.p.moverob(game);
 				MyGameGUI.score = showScore(game);
