@@ -80,7 +80,6 @@ public class auto {
 	// algoritem for thee automaticly mode
 	public void StartAuto(game_service game) {
 		try {
-	
 			Game_Server.login(206087702);
 			System.out.println(game.toString());
 			p = new play(game);

@@ -40,6 +40,7 @@ public class SimpleDB {
 		printLog();
 		String kml = getKML(206087702, 0);
 		System.out.println("***** KML file example: ******");
+		game.sendKML(kml);
 		System.out.println("" + kml);
 	}
 

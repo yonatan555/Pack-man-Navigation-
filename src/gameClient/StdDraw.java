@@ -1801,7 +1801,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			Game_Server.login(206087702);
 			numOfGames = getNumOfGames();
 			
-			//bestscore = bestScore();
+		//	bestscore = bestScore();
 			String s = "NumOfGames: " + numOfGames + "\n"+"The current game: " + CurrentLevel+ "\n"+ bestscore;
 			JOptionPane.showMessageDialog(j,s);	
 			
@@ -1814,13 +1814,48 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	}
 	/*private String bestScore() {
 		String s= "";
-		int scores [][] =  new int [12][2];
-		Hashtable<Integer, Integer> STO = new Hashtable<>();
-		for()
-		Hashtable<Integer, int[][]> 
+		int arr [][]=new int [12][2]; 
+		int STO [][] =   { 		{290, 0},
+								{580, 1},
+								{580, 3},
+								{500, 5},
+								{580, 9},
+								{580, 11},
+								{580, 13},
+								{290, 16},
+								{580, 19},
+								{290, 20},
+								{1140, 23}
+								};
+		Hashtable<Integer, int[][]> table =  new Hashtable<>();
+		table = initHash(table);
 		return null;
-	}*/
+	}
 
+	private Hashtable<Integer, int[][]> initHash(Hashtable<Integer, int[][]> table) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser, SimpleDB.jdbcUserPassword);
+				Statement statement = connection.createStatement();
+				String allCustomersQuery = "SELECT * FROM Logs;";
+				ResultSet resultSet = statement.executeQuery(allCustomersQuery);
+				while (resultSet.next()) {
+					System.out.println("Id: " + resultSet.getInt("UserID") + "," + resultSet.getInt("levelID") + ","
+							+ resultSet.getInt("moves") + "," + resultSet.getDate("time"));
+				}
+				resultSet.close();
+				statement.close();
+				connection.close();
+			}
+
+			catch (SQLException sqle) {
+				System.out.println("SQLException: " + sqle.getMessage());
+				System.out.println("Vendor Error: " + sqle.getErrorCode());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			return table;	
+	}*/
 	public static int getNumOfGames() {
 		int counter = 0;
 		try {
