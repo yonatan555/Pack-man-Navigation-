@@ -24,7 +24,6 @@ public class auto {
 		this.kmlLog = null;
 		this.p = null;
 		this.numbergame = 0;
-
 	}
 	
 
@@ -97,12 +96,16 @@ public class auto {
 			double min=Double.MAX_VALUE;
 			int fru=0;
 			game.startGame();
+			kmlLog = new KML_Logger(p.grp);
+			kmlLog.BuildGraph();
+			kmlLog.setGame(game);
+			threadForKML(game);
 			long time_l=game.timeToEnd();
 			while (game.isRunning()) {
-				//if(time_l-game.timeToEnd()>75) {
-					//game.move();
-					//time_l=game.timeToEnd();
-				//}	
+				if(time_l-game.timeToEnd()>96) {
+					game.move();
+					time_l=game.timeToEnd();
+				}	
 				MyGameGUI.time = game.timeToEnd() / 1000;
 				List<node_data> l = new ArrayList<node_data>();
 				for (int i = 0; i < count; i++) {
@@ -122,17 +125,16 @@ public class auto {
 									gui.p.locatefruit();
 									gui.p.moverob(game);
 									gui.paint();
-
 								}
 							} 
 							else break;
 						}
 						else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
 							min=Double.MAX_VALUE;
-							if(time_l-game.timeToEnd()>50) {
+							/*if(time_l-game.timeToEnd()>50) {
 								game.move();
 								time_l=game.timeToEnd();
-							}	
+							}	*/
 				}
 				int a=0;
 				gui.p.movefrut(game);
@@ -140,8 +142,10 @@ public class auto {
 				MyGameGUI.score = showScore(game);
 				gui.p.locatefruit();
 				gui.paint();
-
 			}
+			kmlLog.save("data/"+numbergame+".kml");
+			
+			
 		}
 
 		catch (Exception e) {
@@ -149,6 +153,9 @@ public class auto {
 		}
 
 	}
+	/*public String readKML(String a) {
+		
+	}*/
 
 	// show the score on the monitor
 	public String showScore(game_service game) throws JSONException {

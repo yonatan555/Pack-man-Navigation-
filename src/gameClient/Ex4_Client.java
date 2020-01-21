@@ -53,7 +53,7 @@ public class Ex4_Client implements Runnable{
 		init(game);
 		
 		game.startGame();
-		int ind=0;
+		int ind = 0;
 		long dt=200;
 		int jj = 0;
 		while(game.isRunning()) {
