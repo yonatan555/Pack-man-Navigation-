@@ -483,14 +483,16 @@ import dataStructure.node_data;
  */
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 	static int numOfGames = 0;
-	static String bestscore= "";
-	static int CurrentLevel = 0;
+	static Double arr[] = new Double [11];
+	static String places = "";
+	static String bestscore = "";
+	static int CurrentLevel ;
 	static MyGameGUI gg;
 	static game_service game;
 	// private static boolean isPressed = false;
 	public static double x = 0;
 	public static double y = 0;
-	
+
 	public static void setGraph(MyGameGUI gg2) {
 		gg = gg2;
 	}
@@ -740,23 +742,27 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 		JMenu menu1 = new JMenu("Info");
 		menuBar.add(menu1);
-		
+
 		JMenuItem item2 = new JMenuItem("Auto");
 		item2.addActionListener(std);
 		menu.add(item2);
+
 		JMenuItem item3 = new JMenuItem("Manual");
 		item3.addActionListener(std);
 		menu.add(item3);
-		
+
 		JMenuItem item4 = new JMenuItem("InfoUser");
 		item4.addActionListener(std);
 		menu1.add(item4);
+
 		JMenuItem item5 = new JMenuItem("Place");
 		item5.addActionListener(std);
 		menu1.add(item5);
-		
-		
-		
+
+		JMenuItem item6 = new JMenuItem("bestScores");
+		item6.addActionListener(std);
+		menu1.add(item6);
+
 		return menuBar;
 	}
 
@@ -1766,7 +1772,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			boolean input = true;
 			while (input) {
 				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
-				if(gameNum==null || gameNum.equals("")) break;
+				if (gameNum == null || gameNum.equals(""))
+					break;
 				num = gameNum;
 				int number = Integer.parseInt(num);
 				if (number <= 23 && number >= 0) {
@@ -1786,7 +1793,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 			while (input) {
 				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
-				if(gameNum==null || gameNum.equals("")) break;
+				if (gameNum == null || gameNum.equals(""))
+					break;
 				num = gameNum;
 				int number = Integer.parseInt(num);
 				if (number <= 23 && number >= 0) {
@@ -1800,83 +1808,323 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 		if (op.equals("InfoUser")) {
 			JFrame j = new JFrame();
-			Game_Server.login(206087702);
 			numOfGames = getNumOfGames();
-			
-		//	bestscore = bestScore();
-			String s = "NumOfGames: " + numOfGames + "\n"+"The current game: " + CurrentLevel+ "\n"+ bestscore;
-			JOptionPane.showMessageDialog(j,s);	
-			
-			
+			String s = "NumOfGames: " + numOfGames + "\n" + "The current game: " + CurrentLevel ;
+			JOptionPane.showMessageDialog(j, s);
+
+		}
+		if (op.equals("bestScores")) {
+
+			JFrame j = new JFrame();
+			bestscore = bestScore();
+			JOptionPane.showMessageDialog(j, bestscore);
+
 		}
 		if (op.equals("Place")) {
 			
+			JFrame j = new JFrame();
+			places = findPlace();
+			JOptionPane.showMessageDialog(j, bestscore);
 		}
-	
-	}
-	/*private String bestScore() {
-		String s= "";
-		int arr [][]=new int [12][2]; 
-		int STO [][] =   { 		{290, 0},
-								{580, 1},
-								{580, 3},
-								{500, 5},
-								{580, 9},
-								{580, 11},
-								{580, 13},
-								{290, 16},
-								{580, 19},
-								{290, 20},
-								{1140, 23}
-								};
-		Hashtable<Integer, int[][]> table =  new Hashtable<>();
-		table = initHash(table);
-		return null;
 	}
 
-	private Hashtable<Integer, int[][]> initHash(Hashtable<Integer, int[][]> table) {
+	private String findPlace() {
+		int counter = 0;
+		ArrayList<Double> a = new ArrayList<>();
+		ArrayList<Double> b = new ArrayList<>();
+		ArrayList<Double> c = new ArrayList<>();
+		ArrayList<Double> d = new ArrayList<>();
+		ArrayList<Double> e = new ArrayList<>();
+		ArrayList<Double> f = new ArrayList<>();
+		ArrayList<Double> g = new ArrayList<>();
+		ArrayList<Double> h = new ArrayList<>();
+		ArrayList<Double> i = new ArrayList<>();
+		ArrayList<Double> j = new ArrayList<>();
+		ArrayList<Double> k = new ArrayList<>();
+		int arr2 [] = {0,1,3,5,9,13,16,19,20,23};
+		for (int l = 0; l < arr.length; l++) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
-				Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser, SimpleDB.jdbcUserPassword);
+				Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser,SimpleDB.jdbcUserPassword);
 				Statement statement = connection.createStatement();
 				String allCustomersQuery = "SELECT * FROM Logs;";
 				ResultSet resultSet = statement.executeQuery(allCustomersQuery);
 				while (resultSet.next()) {
-					System.out.println("Id: " + resultSet.getInt("UserID") + "," + resultSet.getInt("levelID") + ","
-							+ resultSet.getInt("moves") + "," + resultSet.getDate("time"));
+					if (arr2 [l] == 0 && resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							a.add(resultSet.getDouble("score") );
+						}
+					}
+					if (arr2 [l] == 1 &&resultSet.getInt("levelID") == 1 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							b.add(resultSet.getDouble("score") );
+						}
+					}
+					if (arr2 [l] == 3 &&  resultSet.getInt("levelID") == 3 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							c.add(resultSet.getDouble("score") );
+						}
+					}
+					if (arr2 [l] == 5 && resultSet.getInt("levelID") == 5 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							d.add(resultSet.getDouble("score") );
+						}
+					}
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							a.add(resultSet.getDouble("score") );
+						}
+					}
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							a.add(resultSet.getDouble("score") );
+						}
+					}
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							a.add(resultSet.getDouble("score") );
+						}
+					}
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							a.add(resultSet.getDouble("score") );
+						}
+					}
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							a.add(resultSet.getDouble("score") );
+						}
+					}
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
+							&& resultSet.getDouble("score") >=145) {
+						if(resultSet.getInt("score") > arr[l]) {
+							a.add(resultSet.getDouble("score") );
+						}
+					}
+					
 				}
+				/*
+				System.out.println("Id: " + resultSet.getInt("UserID") + "," + resultSet.getInt("levelID") + ","
+						+ resultSet.getInt("moves") + "," + resultSet.getDate("time"));
+				*/
 				resultSet.close();
 				statement.close();
 				connection.close();
-			}
-
-			catch (SQLException sqle) {
+			} catch (SQLException sqle) {
 				System.out.println("SQLException: " + sqle.getMessage());
 				System.out.println("Vendor Error: " + sqle.getErrorCode());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			return table;	
-	}*/
+		}
+		return null;
+	}
+	
+	private String bestScore() {
+		String ans = "";
+		try {
+			ArrayList<Double> a = new ArrayList<>();
+			ArrayList<Double> b = new ArrayList<>();
+			ArrayList<Double> c = new ArrayList<>();
+			ArrayList<Double> d = new ArrayList<>();
+			ArrayList<Double> e = new ArrayList<>();
+			ArrayList<Double> f = new ArrayList<>();
+			ArrayList<Double> g = new ArrayList<>();
+			ArrayList<Double> h = new ArrayList<>();
+			ArrayList<Double> i = new ArrayList<>();
+			ArrayList<Double> j = new ArrayList<>();
+			ArrayList<Double> k = new ArrayList<>();
+
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser,
+					SimpleDB.jdbcUserPassword);
+			Statement statement = connection.createStatement();
+			String allCustomersQuery = "SELECT * FROM Logs;";
+			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
+			while (resultSet.next()) {
+				if (resultSet.getInt("UserID") == 301912531 || resultSet.getInt("UserID") == 206087702) {
+
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") <= 290
+							&& resultSet.getInt("score") >= 145) {
+						a.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 1 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 450) {
+						b.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 3 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 720) {
+						c.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 5 && resultSet.getInt("moves") <= 500
+							&& resultSet.getInt("score") >= 570) {
+						d.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 9 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 510) {
+						e.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 11 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 1050) {
+						f.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 13 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 310) {
+						g.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 16 && resultSet.getInt("moves") <= 290
+							&& resultSet.getInt("score") >= 235) {
+						h.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 19 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 250) {
+						i.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 20 && resultSet.getInt("moves") <= 290
+							&& resultSet.getInt("score") >= 200) {
+						j.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 23 && resultSet.getInt("moves") <= 1140
+							&& resultSet.getInt("score") >= 1000) {
+						k.add(resultSet.getDouble("score"));
+					}
+				}
+			}
+			String ab = "";
+			String bb = "";
+			String cb = "";
+			String db = "";
+			String eb = "";
+			String fb = "";
+			String gb = "";
+			String hb = "";
+			String ib = "";
+			String jb = "";
+			String kb = "";
+			
+			if (a != null && a.size() >= 1) {
+				a.sort(null);
+				ab = "" + a.get(a.size() - 1);
+				arr[0] = a.get(a.size() - 1) ;
+				
+				CurrentLevel = 0;
+			}
+
+			if (b != null && b.size() >= 1) {
+				b.sort(null);
+				bb = "" + b.get(b.size() - 1);
+				arr[1] = b.get(b.size() - 1) ;
+				CurrentLevel = 1;
+			}
+
+			if (c != null && c.size() >= 1) {
+				c.sort(null);
+				cb = "" + c.get(c.size() - 1);
+				arr[2] = c.get(c.size() - 1) ;
+				CurrentLevel = 3;
+			}
+
+			if (d != null && d.size() >= 1) {
+				d.sort(null);
+				db = "" + d.get(d.size() - 1);
+				arr[3] = d.get(d.size() - 1) ;
+				CurrentLevel = 5;
+			}
+
+			if (e != null && e.size() >= 1) {
+				e.sort(null);
+				eb = "" + e.get(e.size() - 1);
+				arr[4] = e.get(e.size() - 1) ;
+				CurrentLevel = 9;
+			}
+
+			if (f != null && f.size() >= 1) {
+				f.sort(null);
+				fb = "" + f.get(f.size() - 1);
+				arr[5] =f.get(f.size() - 1) ;
+				CurrentLevel = 11;
+			}
+
+			if (g != null && g.size() >= 1) {
+				g.sort(null);
+				gb = "" + g.get(g.size() - 1);
+				arr[6] = g.get(g.size() - 1) ;
+				CurrentLevel = 13;
+			}
+
+			if (h != null && h.size() >= 1) {
+				h.sort(null);
+				hb = "" + h.get(h.size() - 1);
+				arr[7] = h.get(h.size() - 1) ;
+				CurrentLevel = 16;
+			}
+
+			if (i != null && i.size() >= 1) {
+				i.sort(null);
+				ib = "" + i.get(i.size() - 1);
+				arr[8] = i.get(i.size() - 1) ;
+				CurrentLevel = 19;
+			}
+
+			if (j != null && j.size() >= 1) {
+				j.sort(null);
+				jb = "" + j.get(j.size() - 1);
+				arr[9] = j.get(j.size() - 1) ;
+				CurrentLevel = 20;
+			}
+
+			if (k != null && k.size() >= 1) {
+				k.sort(null);
+				kb = "" + k.get(k.size() - 1);
+				arr[10] = k.get(k.size() - 1) ;
+				CurrentLevel = 23;
+			}
+			
+			ans = "The best score for 0: " + ab + "\nThe best score for 1: " + bb + "\nThe best score for 3: " + cb
+					+ "\nThe best score for 5: " + db + "\nThe best score for 9: " + eb + "\nThe best score for 11: " + fb
+					+ "\nThe best score for 13: " + gb + "\nThe best score for 16: " + hb + "\nThe best score for 19: "
+					+ ib + "\nThe best score for 20: " + jb + "\nThe best score for 23: " + kb;
+			resultSet.close();
+			statement.close();
+			connection.close();
+		}
+
+		catch (SQLException sqle) {
+			System.out.println("SQLException: " + sqle.getMessage());
+			System.out.println("Vendor Error: " + sqle.getErrorCode());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return ans;
+	}
+
 	public static int getNumOfGames() {
 		int counter = 0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser, SimpleDB.jdbcUserPassword);
+			Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser,SimpleDB.jdbcUserPassword);
 			Statement statement = connection.createStatement();
 			String allCustomersQuery = "SELECT * FROM Logs;";
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
-				while (resultSet.next()) {
-				if (resultSet.getInt("UserID") == 206087702 || resultSet.getInt("UserID") == 301912531) {/// add ahmad id 
+			while (resultSet.next()) {
+				if (resultSet.getInt("UserID") == 206087702 || resultSet.getInt("UserID") == 301912531) {/// add ahmad
+					/// id
 					counter++;
-					CurrentLevel = resultSet.getInt("levelID") ;
 				}
 			}
 			resultSet.close();
 			statement.close();
 			connection.close();
-		}
-		catch (SQLException sqle) {
+		} catch (SQLException sqle) {
 			System.out.println("SQLException: " + sqle.getMessage());
 			System.out.println("Vendor Error: " + sqle.getErrorCode());
 		} catch (ClassNotFoundException e) {
@@ -1884,6 +2132,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 		return counter;
 	}
+
 	/***************************************************************************
 	 * Mouse interactions.
 	 ***************************************************************************/

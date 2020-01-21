@@ -36,7 +36,7 @@ public class SimpleDB {
 		System.out.println(game.toString());
 		// int id1 = 999; // "dummy existing ID
 		// int level = 0;
-		 allUsers(); //return the num of users
+		// allUsers(); //return the num of users
 		printLog();
 		String kml = getKML(206087702, 0);
 		System.out.println("***** KML file example: ******");

@@ -105,11 +105,11 @@ public class auto {
 			threadForKML(game);
 			long time_l=game.timeToEnd();
 			while (game.isRunning()) {
-				if(time_l-game.timeToEnd()>96) {
+			/*	if(time_l-game.timeToEnd()>95) {
 					game.move();
 					time_l=game.timeToEnd();
 				}	
-				MyGameGUI.time = game.timeToEnd() / 1000;
+				*/MyGameGUI.time = game.timeToEnd() / 1000;
 				List<node_data> l = new ArrayList<node_data>();
 				for (int i = 0; i < count; i++) {
 					for (int j = 0; j < gui.p.fru.size(); j++) {
@@ -134,10 +134,10 @@ public class auto {
 						}
 						else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
 							min=Double.MAX_VALUE;
-							/*if(time_l-game.timeToEnd()>50) {
+							if(time_l-game.timeToEnd()>80) {
 								game.move();
 								time_l=game.timeToEnd();
-							}	*/
+							}
 				}
 				int a=0;
 				gui.p.movefrut(game);
@@ -147,7 +147,6 @@ public class auto {
 				gui.paint();
 			}
 			kmlLog.save("data/"+numbergame+".kml");
-			//System.out.println(game.toString());
 			String kmlFile =  kmlStr("data/"+numbergame+".kml");
 			game.sendKML(kmlFile);
 			
