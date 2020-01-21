@@ -1,5 +1,8 @@
 package gameClient;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +147,9 @@ public class auto {
 				gui.paint();
 			}
 			kmlLog.save("data/"+numbergame+".kml");
-			
+			//System.out.println(game.toString());
+			String kmlFile =  kmlStr("data/"+numbergame+".kml");
+			game.sendKML(kmlFile);
 			
 		}
 
@@ -152,6 +157,24 @@ public class auto {
 			e.printStackTrace();
 		}
 
+	}
+	private String kmlStr(String path)
+	{
+		String st=""; 
+		try {
+			File file = new File(path);
+			BufferedReader br = new BufferedReader(new FileReader(file)); 
+
+			String str;
+			while ((str = br.readLine()) != null) 
+			{
+				st+=str+"\n"; 
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return st;
 	}
 	/*public String readKML(String a) {
 		
