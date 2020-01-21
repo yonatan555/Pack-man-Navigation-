@@ -78,7 +78,7 @@ public class auto {
 	}
 
 	// algoritem for thee automaticly mode
-	public void StartAuto(game_service game) {
+	public  void StartAuto(game_service game) {
 		try {
 			Game_Server.login(206087702);
 			System.out.println(game.toString());
@@ -93,51 +93,46 @@ public class auto {
 			}
 			gui.p.moverob(game);
 			Graph_Algo g = new Graph_Algo(gui.p.grp);
-			double sum = 0;
-			double min = 1000;
-			int fru = 0;
+			double sum=0;
+			double min=Double.MAX_VALUE;
+			int fru=0;
 			game.startGame();
-			long time_l = game.timeToEnd();
+			long time_l=game.timeToEnd();
 			while (game.isRunning()) {
-				if (time_l - game.timeToEnd() > 50) {
-					game.move();
-					time_l = game.timeToEnd();
-				}
-				// game.move();
+				//if(time_l-game.timeToEnd()>75) {
+					//game.move();
+					//time_l=game.timeToEnd();
+				//}	
 				MyGameGUI.time = game.timeToEnd() / 1000;
 				List<node_data> l = new ArrayList<node_data>();
 				for (int i = 0; i < count; i++) {
 					for (int j = 0; j < gui.p.fru.size(); j++) {
-						// if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(j).getdest()) {
-						sum = g.shortestPathDist(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
-						// System.out.println(sum);
-						if (sum <= min) {
-							// System.out.println(j);
-							fru = j;
-							min = sum;
-						}
-						// }
-					}
-					if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(fru).getdest()) {
-						l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(fru).getdest());
-						// System.out.println("i= "+i+" j= "+fru);
-						// System.out.println(gui.p.rob.get(i).getSrc()+"
-						// "+gui.p.fru.get(fru).getdest());
-						if (l != null) {
-							for (int k = l.size() - 2; k >= 0; k--) {
-								game.chooseNextEdge(i, l.get(k).getKey());
-								gui.p.locatefruit();
-								gui.p.moverob(game);
-								gui.paint();
-
+							sum=g.shortestPathDist(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
+							if(sum<=min && gui.p.fru.get(j).getTag()!=100) {
+								fru=j;
+								min=sum;
 							}
-						} else
-							break;
-					} else
-						game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
-					// System.out.println("asdasd"+gui.p.fru.get(fru).getSrc());
-					min = 1000;
-					// game.move();
+					}
+					gui.p.fru.get(fru).setTag(100);
+							if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(fru).getdest()) {
+							l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(fru).getdest());
+							if (l != null) {
+								for (int k = l.size() - 2; k >= 0; k--) {
+									game.chooseNextEdge(i, l.get(k).getKey());
+									gui.p.locatefruit();
+									gui.p.moverob(game);
+									gui.paint();
+
+								}
+							} 
+							else break;
+						}
+						else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
+							min=Double.MAX_VALUE;
+							if(time_l-game.timeToEnd()>50) {
+								game.move();
+								time_l=game.timeToEnd();
+							}	
 				}
 				gui.p.movefrut(game);
 				gui.p.moverob(game);
@@ -146,7 +141,6 @@ public class auto {
 				gui.paint();
 
 			}
-			System.out.println(game.toString());
 		}
 
 		catch (Exception e) {

@@ -16,12 +16,14 @@ public class fruit implements fruitX{
 	int src;
 	int dest;
 	edge_data edge;
+	public int tag;
 	
 	public fruit () {
 		
 		this.value=0;
 		this.type=0;
 		this.pos= Point3D.ORIGIN;
+		this.tag=0;
 		
 	}
 	// read fro a json file and init to fruit
@@ -81,6 +83,12 @@ public class fruit implements fruitX{
 	}
 	public void setPoint(String s) {
 		this.pos = new Point3D(s);
+	}
+	public void setTag(int tag) {
+		this.tag=tag;
+	}
+	public int getTag() {
+		return this.tag;
 	}
 	
 	
