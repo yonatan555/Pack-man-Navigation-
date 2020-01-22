@@ -111,10 +111,9 @@ public class auto {
 			threadForKML(game);
 			long time_l=game.timeToEnd();
 			while (game.isRunning()) {
-					if(time_l-game.timeToEnd()>70) {
-						game.move();
-						time_l=game.timeToEnd();
-					}	
+				/*
+				 * if(time_l-game.timeToEnd()>20) { game.move(); time_l=game.timeToEnd(); }
+				 */
 					MyGameGUI.time = game.timeToEnd() / 1000;
 					List<node_data> l = new ArrayList<node_data>();
 					for (int i = 0; i < count; i++) {
@@ -140,10 +139,10 @@ public class auto {
 							}
 							else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
 								min=Double.MAX_VALUE;
-								/*if(time_l-game.timeToEnd()>80) {
+								if(time_l-game.timeToEnd()>40) {
 									game.move();
 									time_l=game.timeToEnd();
-								}*/
+								}
 					}
 				gui.p.movefrut(game);
 				gui.p.moverob(game);

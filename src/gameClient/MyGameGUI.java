@@ -324,7 +324,7 @@ public void setplay(game_service game) throws JSONException {
 
 			StdDraw.setPenColor(Color.black);
 			StdDraw.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-			StdDraw.text(this.Min_x + 0.0023, this.Min_y + 0.0004, "score : " + score);
+			StdDraw.text(this.Max_x- 0.004, this.Min_y + 0.000001, "score : " + score);
 		} else {
 			return;
 		}
