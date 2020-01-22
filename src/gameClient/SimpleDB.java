@@ -57,7 +57,7 @@ public class SimpleDB {
 			String allCustomersQuery = "SELECT * FROM Logs;";
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
 			while (resultSet.next()) {
-				System.out.println("Id: " + resultSet.getInt("UserID") + "," + resultSet.getInt("levelID") + ","
+				System.out.println("Id: " + resultSet.getInt("UserID")  + "," + resultSet.getInt("levelID") + ","
 						+ resultSet.getInt("moves") + "," + resultSet.getDate("time"));
 			}
 			resultSet.close();

@@ -483,10 +483,10 @@ import dataStructure.node_data;
  */
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 	static int numOfGames = 0;
-	static Double arr[] = new Double [11];
+	static Double arr[] = new Double[11];
 	static String places = "";
 	static String bestscore = "";
-	static int CurrentLevel ;
+	static int CurrentLevel;
 	static MyGameGUI gg;
 	static game_service game;
 	// private static boolean isPressed = false;
@@ -1733,7 +1733,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	// thread run the auto/manual request
 	Thread t;
 
-	// for manual
+	// using for manual stating
 	private void Threadforman(String gameNum) {
 		t = new Thread(new Runnable() {
 			@Override
@@ -1746,7 +1746,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		t.start();
 	}
 
-	// for auto
+	// using for auto stating
 	private void Threadforman1(String gameNum) {
 		t = new Thread(new Runnable() {
 			@Override
@@ -1765,6 +1765,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String op = e.getActionCommand();
+		//initilze the manual runnig
 		if (op.equals("Manual")) {
 			String num = "";
 			String gameNum = "";
@@ -1785,12 +1786,13 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				}
 			}
 		}
+		//initilze the auto runnig
 		if (op.equals("Auto")) {
 			String num = "";
 			String gameNum = "";
 			JFrame j = new JFrame();
 			boolean input = true;
-
+			
 			while (input) {
 				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
 				if (gameNum == null || gameNum.equals(""))
@@ -1806,129 +1808,236 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				}
 			}
 		}
+		//show infouser
 		if (op.equals("InfoUser")) {
 			JFrame j = new JFrame();
 			numOfGames = getNumOfGames();
-			String s = "NumOfGames: " + numOfGames + "\n" + "The current game: " + CurrentLevel ;
+			String s = "NumOfGames: " + numOfGames + "\n" + "The current game: " + CurrentLevel;
 			JOptionPane.showMessageDialog(j, s);
 
 		}
+		//show bestscore
 		if (op.equals("bestScores")) {
 
 			JFrame j = new JFrame();
 			bestscore = bestScore();
 			JOptionPane.showMessageDialog(j, bestscore);
-
-		}
-		if (op.equals("Place")) {
 			
-			JFrame j = new JFrame();
-			places = findPlace();
-			JOptionPane.showMessageDialog(j, bestscore);
+		}
+		//
+		//show our scores relative the others
+		if (op.equals("Place")) {
+			addValues();
+			String[] ans = new String [11];
+			for (int i = 0; i < ans.length; i++) {
+				ans[i] = "";
+			}
+			String reuslt = "The Best Our Results:\n";
+			int arr_moves[] = {290,580,0,580,0,500,0,0,0,580,0,580,0,580,0,0,290,0,0,580,290,0,0,1140};
+			int index=0;
+			for (int i = 0; i < 24 ; i++) {
+				if(i==0 || i==1 || i==3 || i==5 || i==9 || i==11 || i==13 || i==16 || i==19 || i==20 || i==23 ) {
+					
+					ans[index]+= i+"   rank: "+Ranking(i,arr_moves[i],index);
+					index++;
+				}
+			}
+			for (int i = 0; i < ans.length-1; i++) {
+				reuslt+="       \nMy stage:   "+ans[i];
+				}
+		
+		
+			JFrame jinput5 = new JFrame();
+			jinput5.setTitle("Best results");
+			JOptionPane.showMessageDialog(jinput5,reuslt);
+		}
+	}
+	//returrn the rank for each level
+	public static int Ranking(int levelID, int move, int i) {
+		Hashtable<Integer, Integer> keep_id	= new Hashtable<Integer, Integer>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = 
+					DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser, SimpleDB.jdbcUserPassword);
+			Statement statement = connection.createStatement();
+			String allCustomersQuery = "SELECT * FROM Logs";
+
+			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
+			while(resultSet.next())
+			{
+				if(resultSet.getInt("levelID") == levelID) 
+				{					
+					if(resultSet.getInt("UserID")!=206087702 && resultSet.getInt("moves") <= move && resultSet.getInt("score")>arr[i])
+					{
+						keep_id.put(resultSet.getInt("UserID"), resultSet.getInt("score"));
+					}				
+				}
+			}
+			resultSet.close();
+			statement.close();		
+			connection.close();		
+		}
+
+		catch (SQLException sqle) {
+			System.out.println("SQLException: " + sqle.getMessage());
+			System.out.println("Vendor Error: " + sqle.getErrorCode());
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return keep_id.size()+1;
+
+	}
+	//add values to satatic arr(put our scores )
+	
+	private static void addValues() {
+		try {
+			ArrayList<Double> a = new ArrayList<>();
+			ArrayList<Double> b = new ArrayList<>();
+			ArrayList<Double> c = new ArrayList<>();
+			ArrayList<Double> d = new ArrayList<>();
+			ArrayList<Double> e = new ArrayList<>();
+			ArrayList<Double> f = new ArrayList<>();
+			ArrayList<Double> g = new ArrayList<>();
+			ArrayList<Double> h = new ArrayList<>();
+			ArrayList<Double> i = new ArrayList<>();
+			ArrayList<Double> j = new ArrayList<>();
+			ArrayList<Double> k = new ArrayList<>();
+
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser,
+					SimpleDB.jdbcUserPassword);
+			Statement statement = connection.createStatement();
+			String allCustomersQuery = "SELECT * FROM Logs;";
+			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
+			while (resultSet.next()) {
+				if (resultSet.getInt("UserID") == 301912531 || resultSet.getInt("UserID") == 206087702) {
+
+					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") <= 290
+							&& resultSet.getInt("score") >= 145) {
+						a.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 1 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 450) {
+						b.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 3 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 720) {
+						c.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 5 && resultSet.getInt("moves") <= 500
+							&& resultSet.getInt("score") >= 570) {
+						d.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 9 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 510) {
+						e.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 11 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 1050) {
+						f.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 13 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 310) {
+						g.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 16 && resultSet.getInt("moves") <= 290
+							&& resultSet.getInt("score") >= 235) {
+						h.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 19 && resultSet.getInt("moves") <= 580
+							&& resultSet.getInt("score") >= 250) {
+						i.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 20 && resultSet.getInt("moves") <= 290
+							&& resultSet.getInt("score") >= 200) {
+						j.add(resultSet.getDouble("score"));
+					}
+					if (resultSet.getInt("levelID") == 23 && resultSet.getInt("moves") <= 1140
+							&& resultSet.getInt("score") >= 1000) {
+						k.add(resultSet.getDouble("score"));
+					}
+				}
+			}
+			if (a != null && a.size() >= 1) {
+				a.sort(null);
+				arr[0] = a.get(a.size() - 1);
+				CurrentLevel = 0;
+			}
+
+			if (b != null && b.size() >= 1) {
+				b.sort(null);
+				arr[1] = b.get(b.size() - 1);
+				CurrentLevel = 1;
+			}
+
+			if (c != null && c.size() >= 1) {
+				c.sort(null);
+				arr[2] = c.get(c.size() - 1);
+				CurrentLevel = 3;
+			}
+
+			if (d != null && d.size() >= 1) {
+				d.sort(null);
+				arr[3] = d.get(d.size() - 1);
+				CurrentLevel = 5;
+			}
+
+			if (e != null && e.size() >= 1) {
+				e.sort(null);
+				arr[4] = e.get(e.size() - 1);
+				CurrentLevel = 9;
+			}
+
+			if (f != null && f.size() >= 1) {
+				f.sort(null);
+				arr[5] = f.get(f.size() - 1);
+				CurrentLevel = 11;
+			}
+
+			if (g != null && g.size() >= 1) {
+				g.sort(null);
+				arr[6] = g.get(g.size() - 1);
+				CurrentLevel = 13;
+			}
+
+			if (h != null && h.size() >= 1) {
+				h.sort(null);
+				arr[7] = h.get(h.size() - 1);
+				CurrentLevel = 16;
+			}
+
+			if (i != null && i.size() >= 1) {
+				i.sort(null);
+				arr[8] = i.get(i.size() - 1);
+				CurrentLevel = 19;
+			}
+
+			if (j != null && j.size() >= 1) {
+				j.sort(null);
+				arr[9] = j.get(j.size() - 1);
+				CurrentLevel = 20;
+			}
+
+			if (k != null && k.size() >= 1) {
+				k.sort(null);
+				arr[10] = k.get(k.size() - 1);
+				CurrentLevel = 23;
+			}
+
+			resultSet.close();
+			statement.close();
+			connection.close();
+		}
+
+		catch (SQLException sqle) {
+			System.out.println("SQLException: " + sqle.getMessage());
+			System.out.println("Vendor Error: " + sqle.getErrorCode());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 
-	private String findPlace() {
-		int counter = 0;
-		ArrayList<Double> a = new ArrayList<>();
-		ArrayList<Double> b = new ArrayList<>();
-		ArrayList<Double> c = new ArrayList<>();
-		ArrayList<Double> d = new ArrayList<>();
-		ArrayList<Double> e = new ArrayList<>();
-		ArrayList<Double> f = new ArrayList<>();
-		ArrayList<Double> g = new ArrayList<>();
-		ArrayList<Double> h = new ArrayList<>();
-		ArrayList<Double> i = new ArrayList<>();
-		ArrayList<Double> j = new ArrayList<>();
-		ArrayList<Double> k = new ArrayList<>();
-		int arr2 [] = {0,1,3,5,9,13,16,19,20,23};
-		for (int l = 0; l < arr.length; l++) {
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser,SimpleDB.jdbcUserPassword);
-				Statement statement = connection.createStatement();
-				String allCustomersQuery = "SELECT * FROM Logs;";
-				ResultSet resultSet = statement.executeQuery(allCustomersQuery);
-				while (resultSet.next()) {
-					if (arr2 [l] == 0 && resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							a.add(resultSet.getDouble("score") );
-						}
-					}
-					if (arr2 [l] == 1 &&resultSet.getInt("levelID") == 1 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							b.add(resultSet.getDouble("score") );
-						}
-					}
-					if (arr2 [l] == 3 &&  resultSet.getInt("levelID") == 3 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							c.add(resultSet.getDouble("score") );
-						}
-					}
-					if (arr2 [l] == 5 && resultSet.getInt("levelID") == 5 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							d.add(resultSet.getDouble("score") );
-						}
-					}
-					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							a.add(resultSet.getDouble("score") );
-						}
-					}
-					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							a.add(resultSet.getDouble("score") );
-						}
-					}
-					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							a.add(resultSet.getDouble("score") );
-						}
-					}
-					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							a.add(resultSet.getDouble("score") );
-						}
-					}
-					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							a.add(resultSet.getDouble("score") );
-						}
-					}
-					if (resultSet.getInt("levelID") == 0 && resultSet.getInt("moves") >=290
-							&& resultSet.getDouble("score") >=145) {
-						if(resultSet.getInt("score") > arr[l]) {
-							a.add(resultSet.getDouble("score") );
-						}
-					}
-					
-				}
-				/*
-				System.out.println("Id: " + resultSet.getInt("UserID") + "," + resultSet.getInt("levelID") + ","
-						+ resultSet.getInt("moves") + "," + resultSet.getDate("time"));
-				*/
-				resultSet.close();
-				statement.close();
-				connection.close();
-			} catch (SQLException sqle) {
-				System.out.println("SQLException: " + sqle.getMessage());
-				System.out.println("Vendor Error: " + sqle.getErrorCode());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-	
 	private String bestScore() {
 		String ans = "";
 		try {
@@ -2010,89 +2119,89 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			String ib = "";
 			String jb = "";
 			String kb = "";
-			
+
 			if (a != null && a.size() >= 1) {
 				a.sort(null);
 				ab = "" + a.get(a.size() - 1);
-				arr[0] = a.get(a.size() - 1) ;
-				
+				arr[0] = a.get(a.size() - 1);
 				CurrentLevel = 0;
 			}
 
 			if (b != null && b.size() >= 1) {
 				b.sort(null);
 				bb = "" + b.get(b.size() - 1);
-				arr[1] = b.get(b.size() - 1) ;
+				arr[1] = b.get(b.size() - 1);
 				CurrentLevel = 1;
 			}
 
 			if (c != null && c.size() >= 1) {
 				c.sort(null);
 				cb = "" + c.get(c.size() - 1);
-				arr[2] = c.get(c.size() - 1) ;
+				arr[2] = c.get(c.size() - 1);
 				CurrentLevel = 3;
 			}
 
 			if (d != null && d.size() >= 1) {
 				d.sort(null);
 				db = "" + d.get(d.size() - 1);
-				arr[3] = d.get(d.size() - 1) ;
+				arr[3] = d.get(d.size() - 1);
 				CurrentLevel = 5;
 			}
 
 			if (e != null && e.size() >= 1) {
 				e.sort(null);
 				eb = "" + e.get(e.size() - 1);
-				arr[4] = e.get(e.size() - 1) ;
+				arr[4] = e.get(e.size() - 1);
 				CurrentLevel = 9;
 			}
 
 			if (f != null && f.size() >= 1) {
 				f.sort(null);
 				fb = "" + f.get(f.size() - 1);
-				arr[5] =f.get(f.size() - 1) ;
+				arr[5] = f.get(f.size() - 1);
 				CurrentLevel = 11;
 			}
 
 			if (g != null && g.size() >= 1) {
 				g.sort(null);
 				gb = "" + g.get(g.size() - 1);
-				arr[6] = g.get(g.size() - 1) ;
+				arr[6] = g.get(g.size() - 1);
 				CurrentLevel = 13;
 			}
 
 			if (h != null && h.size() >= 1) {
 				h.sort(null);
 				hb = "" + h.get(h.size() - 1);
-				arr[7] = h.get(h.size() - 1) ;
+				arr[7] = h.get(h.size() - 1);
 				CurrentLevel = 16;
 			}
 
 			if (i != null && i.size() >= 1) {
 				i.sort(null);
 				ib = "" + i.get(i.size() - 1);
-				arr[8] = i.get(i.size() - 1) ;
+				arr[8] = i.get(i.size() - 1);
 				CurrentLevel = 19;
 			}
 
 			if (j != null && j.size() >= 1) {
 				j.sort(null);
 				jb = "" + j.get(j.size() - 1);
-				arr[9] = j.get(j.size() - 1) ;
+				arr[9] = j.get(j.size() - 1);
 				CurrentLevel = 20;
 			}
 
 			if (k != null && k.size() >= 1) {
 				k.sort(null);
 				kb = "" + k.get(k.size() - 1);
-				arr[10] = k.get(k.size() - 1) ;
+				arr[10] = k.get(k.size() - 1);
 				CurrentLevel = 23;
 			}
-			
+
 			ans = "The best score for 0: " + ab + "\nThe best score for 1: " + bb + "\nThe best score for 3: " + cb
-					+ "\nThe best score for 5: " + db + "\nThe best score for 9: " + eb + "\nThe best score for 11: " + fb
-					+ "\nThe best score for 13: " + gb + "\nThe best score for 16: " + hb + "\nThe best score for 19: "
-					+ ib + "\nThe best score for 20: " + jb + "\nThe best score for 23: " + kb;
+					+ "\nThe best score for 5: " + db + "\nThe best score for 9: " + eb + "\nThe best score for 11: "
+					+ fb + "\nThe best score for 13: " + gb + "\nThe best score for 16: " + hb
+					+ "\nThe best score for 19: " + ib + "\nThe best score for 20: " + jb + "\nThe best score for 23: "
+					+ kb;
 			resultSet.close();
 			statement.close();
 			connection.close();
@@ -2107,17 +2216,18 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		return ans;
 	}
 
-	public static int getNumOfGames() {
+//return the num of games that played	
+public static int getNumOfGames() {
 		int counter = 0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser,SimpleDB.jdbcUserPassword);
+			Connection connection = DriverManager.getConnection(SimpleDB.jdbcUrl, SimpleDB.jdbcUser,
+					SimpleDB.jdbcUserPassword);
 			Statement statement = connection.createStatement();
 			String allCustomersQuery = "SELECT * FROM Logs;";
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
 			while (resultSet.next()) {
-				if (resultSet.getInt("UserID") == 206087702 || resultSet.getInt("UserID") == 301912531) {/// add ahmad
-					/// id
+				if (resultSet.getInt("UserID") == 206087702 || resultSet.getInt("UserID") == 301912531) {
 					counter++;
 				}
 			}
@@ -2187,6 +2297,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	/**
 	 * This method cannot be called directly.
 	 */
+	
+	//function for manual 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		gg.setXandY(StdDraw.userX(e.getX()), StdDraw.userY(e.getY()));
@@ -2368,5 +2480,5 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 }
 
-//Copyright © 2000–2017, Robert Sedgewick and Kevin Wayne. 
-//Last updated: Mon Aug 27 16:43:47 EDT 2018.
+// Copyright © 2000–2017, Robert Sedgewick and Kevin Wayne.
+// Last updated: Mon Aug 27 16:43:47 EDT 2018.

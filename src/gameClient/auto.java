@@ -16,13 +16,12 @@ import algorithms.Graph_Algo;
 import dataStructure.node_data;
 
 public class auto {
-
 	
 	int numbergame;
 	play p;
 	KML_Logger kmlLog;
 
-	// consturctor
+	//consturctor
 	public auto() {
 		this.kmlLog = null;
 		this.p = null;
@@ -35,9 +34,9 @@ public class auto {
 		this.numbergame = sen;
 	}
 
-	// threadforkml
+	// threadforkml start from other point and initlize a kml file for send the file to server
 	Thread t;
-
+	
 	public void threadForKML(game_service game) {
 		t = new Thread(new Runnable() {
 
@@ -51,7 +50,6 @@ public class auto {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
 					String time = java.time.LocalDate.now() + "T" + java.time.LocalTime.now();
 					LocalTime end = java.time.LocalTime.now();
 					end = end.plusNanos(100 * 1000000);
@@ -79,7 +77,15 @@ public class auto {
 		return i;
 	}
 
-	// algoritem for thee automaticly mode
+	// algoritem for thee automaticly mode 
+	/*
+	 * 
+	 * 	The algo is workking lke we search the shortest way from robot i and other fruit by
+	 *	shortest path algoritm , and we are using with another calculate is calculating the realtive between
+	 *fruit value shortest path ,we are locating the fruts and the robot and updating the them every running (while the game is running).
+	 *	we are sending each robot to another fruit
+	 * **/
+	
 	public  void StartAuto(game_service game) {
 		try {
 			Game_Server.login(206087702);
@@ -105,41 +111,40 @@ public class auto {
 			threadForKML(game);
 			long time_l=game.timeToEnd();
 			while (game.isRunning()) {
-			/*	if(time_l-game.timeToEnd()>95) {
-					game.move();
-					time_l=game.timeToEnd();
-				}	
-				*/MyGameGUI.time = game.timeToEnd() / 1000;
-				List<node_data> l = new ArrayList<node_data>();
-				for (int i = 0; i < count; i++) {
-					for (int j = 0; j < gui.p.fru.size(); j++) {
-							sum=g.shortestPathDist(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
-							if(sum<=min && gui.p.fru.get(j).getTag()!=100) {
-								fru=j;
-								min=sum;
-							}
-					}
-					gui.p.fru.get(fru).setTag(100);
-							if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(fru).getdest()) {
-							l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(fru).getdest());
-							if (l != null) {
-								for (int k = l.size() - 2; k >= 0; k--) {
-									game.chooseNextEdge(i, l.get(k).getKey());
-									gui.p.locatefruit();
-									gui.p.moverob(game);
-									gui.paint();
+					if(time_l-game.timeToEnd()>70) {
+						game.move();
+						time_l=game.timeToEnd();
+					}	
+					MyGameGUI.time = game.timeToEnd() / 1000;
+					List<node_data> l = new ArrayList<node_data>();
+					for (int i = 0; i < count; i++) {
+						for (int j = 0; j < gui.p.fru.size(); j++) {
+								sum=g.shortestPathDist(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
+								if(sum<=min && gui.p.fru.get(j).getTag()!=100) {
+									fru=j;
+									min=sum;
 								}
-							} 
-							else break;
 						}
-						else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
-							min=Double.MAX_VALUE;
-							if(time_l-game.timeToEnd()>80) {
-								game.move();
-								time_l=game.timeToEnd();
+						gui.p.fru.get(fru).setTag(100);
+								if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(fru).getdest()) {
+								l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(fru).getdest());
+								if (l != null) {
+									for (int k = l.size() - 2; k >= 0; k--) {
+										game.chooseNextEdge(i, l.get(k).getKey());
+										gui.p.locatefruit();
+										gui.p.moverob(game);
+										gui.paint();
+									}
+								} 
+								else break;
 							}
-				}
-				int a=0;
+							else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
+								min=Double.MAX_VALUE;
+								/*if(time_l-game.timeToEnd()>80) {
+									game.move();
+									time_l=game.timeToEnd();
+								}*/
+					}
 				gui.p.movefrut(game);
 				gui.p.moverob(game);
 				MyGameGUI.score = showScore(game);
@@ -157,6 +162,7 @@ public class auto {
 		}
 
 	}
+	//we kml file to String and save it 
 	private String kmlStr(String path)
 	{
 		String st=""; 
@@ -179,7 +185,7 @@ public class auto {
 		
 	}*/
 
-	// show the score on the monitor
+	// show the score on the monitor every each minute
 	public String showScore(game_service game) throws JSONException {
 
 		JSONObject m = new JSONObject(game.toString());
