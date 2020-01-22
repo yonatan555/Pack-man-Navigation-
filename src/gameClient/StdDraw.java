@@ -1810,6 +1810,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 		//show infouser
 		if (op.equals("InfoUser")) {
+			addValues();
 			JFrame j = new JFrame();
 			numOfGames = getNumOfGames();
 			String s = "NumOfGames: " + numOfGames + "\n" + "The current game: " + CurrentLevel;
@@ -1818,7 +1819,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 		//show bestscore
 		if (op.equals("bestScores")) {
-
 			JFrame j = new JFrame();
 			bestscore = bestScore();
 			JOptionPane.showMessageDialog(j, bestscore);
@@ -1842,14 +1842,14 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 					index++;
 				}
 			}
-			for (int i = 0; i < ans.length-1; i++) {
+			for (int i = 0; i < ans.length; i++) {
 				reuslt+="       \nMy stage:   "+ans[i];
 				}
+
 		
-		
-			JFrame jinput5 = new JFrame();
-			jinput5.setTitle("Best results");
-			JOptionPane.showMessageDialog(jinput5,reuslt);
+			JFrame jinput = new JFrame();
+			jinput.setTitle("Best results");
+			JOptionPane.showMessageDialog(jinput,reuslt);
 		}
 	}
 	//returrn the rank for each level
@@ -2124,77 +2124,77 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				a.sort(null);
 				ab = "" + a.get(a.size() - 1);
 				arr[0] = a.get(a.size() - 1);
-				CurrentLevel = 0;
+		//		CurrentLevel = 0;
 			}
 
 			if (b != null && b.size() >= 1) {
 				b.sort(null);
 				bb = "" + b.get(b.size() - 1);
 				arr[1] = b.get(b.size() - 1);
-				CurrentLevel = 1;
+			//	CurrentLevel = 1;
 			}
 
 			if (c != null && c.size() >= 1) {
 				c.sort(null);
 				cb = "" + c.get(c.size() - 1);
 				arr[2] = c.get(c.size() - 1);
-				CurrentLevel = 3;
+			//	CurrentLevel = 3;
 			}
 
 			if (d != null && d.size() >= 1) {
 				d.sort(null);
 				db = "" + d.get(d.size() - 1);
 				arr[3] = d.get(d.size() - 1);
-				CurrentLevel = 5;
+			//	CurrentLevel = 5;
 			}
 
 			if (e != null && e.size() >= 1) {
 				e.sort(null);
 				eb = "" + e.get(e.size() - 1);
 				arr[4] = e.get(e.size() - 1);
-				CurrentLevel = 9;
+			//	CurrentLevel = 9;
 			}
 
 			if (f != null && f.size() >= 1) {
 				f.sort(null);
 				fb = "" + f.get(f.size() - 1);
 				arr[5] = f.get(f.size() - 1);
-				CurrentLevel = 11;
+			//	CurrentLevel = 11;
 			}
 
 			if (g != null && g.size() >= 1) {
 				g.sort(null);
 				gb = "" + g.get(g.size() - 1);
 				arr[6] = g.get(g.size() - 1);
-				CurrentLevel = 13;
+			//	CurrentLevel = 13;
 			}
 
 			if (h != null && h.size() >= 1) {
 				h.sort(null);
 				hb = "" + h.get(h.size() - 1);
 				arr[7] = h.get(h.size() - 1);
-				CurrentLevel = 16;
+				//CurrentLevel = 16;
 			}
 
 			if (i != null && i.size() >= 1) {
 				i.sort(null);
 				ib = "" + i.get(i.size() - 1);
 				arr[8] = i.get(i.size() - 1);
-				CurrentLevel = 19;
+			//	CurrentLevel = 19;
 			}
 
 			if (j != null && j.size() >= 1) {
 				j.sort(null);
 				jb = "" + j.get(j.size() - 1);
 				arr[9] = j.get(j.size() - 1);
-				CurrentLevel = 20;
+				//CurrentLevel = 20;
 			}
 
 			if (k != null && k.size() >= 1) {
 				k.sort(null);
 				kb = "" + k.get(k.size() - 1);
 				arr[10] = k.get(k.size() - 1);
-				CurrentLevel = 23;
+			//	CurrentLevel = 23;
 			}
 
 			ans = "The best score for 0: " + ab + "\nThe best score for 1: " + bb + "\nThe best score for 3: " + cb

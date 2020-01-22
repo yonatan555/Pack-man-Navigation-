@@ -135,7 +135,12 @@ public void setplay(game_service game) throws JSONException {
 			initGUI();
 			robot rb = new robot();
 			game.startGame();
+			long time_l=game.timeToEnd();
 			while (game.isRunning()) {
+				if(time_l-game.timeToEnd()>70) {
+					game.move();
+					time_l=game.timeToEnd();
+				}	
 				time = game.timeToEnd() / 1000;
 				paint();
 				double x1 = 0;
@@ -169,7 +174,7 @@ public void setplay(game_service game) throws JSONException {
 						x1 = t.x();
 						y1 = t.y();
 						sum = Math.sqrt((Math.pow((x - x1), 2)) + (Math.pow((y - y1), 2)));
-						if (sum <= 0.001) {
+						if (sum <= 0.0001) {
 							game.chooseNextEdge(rb.getId(), p.grp.getNode(i).getKey());
 							x = 0;
 							y = 0;
@@ -180,7 +185,7 @@ public void setplay(game_service game) throws JSONException {
 						}
 					}
 				}
-				game.move();
+				
 				p.movefrut(game);
 				p.moverob(game);
 				score = showScore(game);
