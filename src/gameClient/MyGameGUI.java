@@ -199,12 +199,14 @@ public void setplay(game_service game) throws JSONException {
 	
 	// auto action that used by the usser 
 	@Override
-	public void StartAuto(String gameNumber) {
+	public void StartAuto(String gameNumber , String id) {
 		try {
 			game_service game = Game_Server.getServer(Integer.parseInt(gameNumber));
 			auto v = new auto();
 			v.setgamenumber(Integer.parseInt(gameNumber));
-			v.StartAuto(game);
+			v.setuserid(Integer.parseInt(id));
+			int d = Integer.parseInt(id);
+			v.StartAuto(game,d);
 		}
 
 		catch (Exception e) {

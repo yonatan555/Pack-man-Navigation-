@@ -16,7 +16,7 @@ import algorithms.Graph_Algo;
 import dataStructure.node_data;
 
 public class auto {
-	
+	int userid;
 	int numbergame;
 	play p;
 	KML_Logger kmlLog;
@@ -26,6 +26,7 @@ public class auto {
 		this.kmlLog = null;
 		this.p = null;
 		this.numbergame = 0;
+		this.userid=0;
 	}
 	
 
@@ -33,6 +34,11 @@ public class auto {
 	public void setgamenumber(int sen) {
 		this.numbergame = sen;
 	}
+	
+	public void setuserid(int id) {
+		this.userid = id;
+	}
+
 
 	// threadforkml start from other point and initlize a kml file for send the file to server
 	Thread t;
@@ -86,9 +92,9 @@ public class auto {
 	 *	we are sending each robot to another fruit
 	 * **/
 	
-	public  void StartAuto(game_service game) {
+	public  void StartAuto(game_service game,int id) {
 		try {
-			Game_Server.login(206087702);
+			Game_Server.login(id);
 			System.out.println(game.toString());
 			p = new play(game);
 			int count = getrobs(game);

@@ -1747,12 +1747,12 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	}
 
 	// using for auto stating
-	private void Threadforman1(String gameNum) {
+	private void Threadforman1(String gameNum, String id) {
 		t = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				gg.StartAuto(gameNum);
+				gg.StartAuto(gameNum,id);
 				t.interrupt();
 			}
 		});
@@ -1777,7 +1777,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 					break;
 				num = gameNum;
 				int number = Integer.parseInt(num);
+				System.out.println(number);
 				if (number <= 23 && number >= 0) {
+					System.out.println(number);
+
 					input = false;
 					j.dispose();
 					Threadforman(gameNum);
@@ -1788,23 +1791,39 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 		//initilze the auto runnig
 		if (op.equals("Auto")) {
-			String num = "";
+			boolean flag =true;
 			String gameNum = "";
+			String id = "";
 			JFrame j = new JFrame();
 			boolean input = true;
+			int number=0;
 			
 			while (input) {
 				gameNum = JOptionPane.showInputDialog(j, "Please enter number game");
-				if (gameNum == null || gameNum.equals(""))
-					break;
-				num = gameNum;
-				int number = Integer.parseInt(num);
-				if (number <= 23 && number >= 0) {
+				id = JOptionPane.showInputDialog(j, "Please enter your id");
+				if (gameNum == null || gameNum.equals("")) break;
+					if (id == null || id.equals("")) break;
+				for (int i = 0; i < id.length(); i++) {
+					if(id.charAt(i) < '0' || id.charAt(i) > '9') {
+						flag  = false;
+						break;
+					}
+				}
+				for (int i = 0; i <gameNum.length() ; i++) {
+					if(gameNum.charAt(i) < '0' || gameNum.charAt(i) > '9') {
+						flag  = false;
+						break;
+					}
+				}
+				if(flag) {
+					number=Integer.parseInt(gameNum);
+				}
+				if (number>=0 && number<=23 && flag) {
 					input = false;
 					j.dispose();
-					Threadforman1(gameNum);
+					Threadforman1(gameNum,id);
 				} else {
-					JOptionPane.showMessageDialog(j, "Enter value 0-23 ");
+					JOptionPane.showMessageDialog(j, "Enter value 0-23 or id is denied ");
 				}
 			}
 		}

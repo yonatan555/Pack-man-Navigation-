@@ -41,7 +41,7 @@ public interface Auto_manual {
 	 * @param gameNumber
 	 */
 
-	public void StartAuto(String gameNumber);
+	public void StartAuto(String gameNumber,String id);
 
 	/**
 	 * reutrn the move and grade durring the using
