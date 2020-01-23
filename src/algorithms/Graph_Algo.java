@@ -50,6 +50,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 		this.m = g;
 	}
 
+	//initlize from a file
 	@Override
 	public void init(String file_name) { // init from fiile
 
@@ -72,11 +73,12 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			System.out.println("ClassNotFoundException is caught");
 		}
 	}
-
+	//save to file a graph_algo
 	@Override
 	public void save(String file_name) { 							//save to file
 
 		try {
+			
 			FileOutputStream file = new FileOutputStream(new File(file_name));
 			ObjectOutputStream out = new ObjectOutputStream(file);
 
@@ -90,7 +92,7 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			System.out.println("IOException is caught");
 		}
 	}
-
+	// cheack if the graph is connected
 	@Override
 	public boolean isConnected() {
 		if(this.m.getV().size() == 0 ) return true;
@@ -120,10 +122,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			if (flag == false || flag1 == false)
 				return false;
 		}
-
 		return flag && flag1;
 	}
-
+	//check the shorstest path between two points at grpah
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		isclear();
@@ -156,10 +157,9 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 			return 0;
 		}
 	}
-
+	
 	private void shortestPathDist1(int src) {
 		String s="";
-		int id=0;
 		Collection<edge_data> edge = this.m.getE(src);
 		int count = edge.size();
 		Iterator<edge_data> ite = edge.iterator();
@@ -195,14 +195,13 @@ public class Graph_Algo implements graph_algorithms, Serializable {
 
 		return list;
 	}
-
+	// check the shortestpath between given points
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		isclear();
 		List<node_data> list = new ArrayList<node_data>();
 		while(targets.size()>1) {
 			double min = Double.MAX_VALUE;
-			int j=0;
 			double sum=0;
 			int src=0;
 			int dest=0;

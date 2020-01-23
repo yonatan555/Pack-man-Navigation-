@@ -28,13 +28,13 @@ public class auto {
 		this.numbergame = 0;
 		this.userid=0;
 	}
-	
+
 
 	// setter
 	public void setgamenumber(int sen) {
 		this.numbergame = sen;
 	}
-	
+
 	public void setuserid(int id) {
 		this.userid = id;
 	}
@@ -42,7 +42,7 @@ public class auto {
 
 	// threadforkml start from other point and initlize a kml file for send the file to server
 	Thread t;
-	
+
 	public void threadForKML(game_service game) {
 		t = new Thread(new Runnable() {
 
@@ -91,7 +91,7 @@ public class auto {
 	 *fruit value shortest path ,we are locating the fruts and the robot and updating the them every running (while the game is running).
 	 *	we are sending each robot to another fruit
 	 * **/
-	
+
 	public  void StartAuto(game_service game,int id) {
 		try {
 			Game_Server.login(id);
@@ -117,39 +117,40 @@ public class auto {
 			threadForKML(game);
 			long time_l=game.timeToEnd();
 			while (game.isRunning()) {
-				/*
-				 * if(time_l-game.timeToEnd()>20) { game.move(); time_l=game.timeToEnd(); }
-				 */
-					MyGameGUI.time = game.timeToEnd() / 1000;
-					List<node_data> l = new ArrayList<node_data>();
-					for (int i = 0; i < count; i++) {
-						for (int j = 0; j < gui.p.fru.size(); j++) {
-								sum=g.shortestPathDist(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
-								if(sum<=min && gui.p.fru.get(j).getTag()!=100) {
-									fru=j;
-									min=sum;
-								}
+
+				// if(time_l-game.timeToEnd()>-100) { game.move(); time_l=game.timeToEnd(); }
+
+				MyGameGUI.time = game.timeToEnd() / 1000;
+				List<node_data> l = new ArrayList<node_data>();
+				for (int i = 0; i < count; i++) {
+					for (int j = 0; j < gui.p.fru.size(); j++) {
+						sum=g.shortestPathDist(gui.p.rob.get(i).getSrc(), gui.p.fru.get(j).getdest());
+						if(sum<=min && gui.p.fru.get(j).getTag()!=100) {
+							fru=j;
+							min=sum;
 						}
-						gui.p.fru.get(fru).setTag(100);
-								if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(fru).getdest()) {
-								l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(fru).getdest());
-								if (l != null) {
-									for (int k = l.size() - 2; k >= 0; k--) {
-										game.chooseNextEdge(i, l.get(k).getKey());
-										gui.p.locatefruit();
-										gui.p.moverob(game);
-										gui.paint();
-									}
-								} 
-								else break;
-							}
-							else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
-								min=Double.MAX_VALUE;
-								if(time_l-game.timeToEnd()>40) {
-									game.move();
-									time_l=game.timeToEnd();
-								}
 					}
+					gui.p.fru.get(fru).setTag(100);
+					if (gui.p.rob.get(i).getSrc() != gui.p.fru.get(fru).getdest()) {
+						l = g.shortestPath(gui.p.rob.get(i).getSrc(), gui.p.fru.get(fru).getdest());
+						if (l != null) {
+							for (int k = l.size() - 2; k >= 0; k--) {
+								game.chooseNextEdge(i, l.get(k).getKey());
+								gui.p.locatefruit();
+								gui.p.moverob(game);
+								gui.paint();
+							}
+						} 
+						else break;
+					}
+					else game.chooseNextEdge(i, gui.p.fru.get(fru).getSrc());
+					min=Double.MAX_VALUE;
+					if(time_l-game.timeToEnd()>40) {
+						game.move();
+						time_l=game.timeToEnd();
+					}
+
+				}
 				gui.p.movefrut(game);
 				gui.p.moverob(game);
 				MyGameGUI.score = showScore(game);
@@ -159,7 +160,7 @@ public class auto {
 			kmlLog.save("data/"+numbergame+".kml");
 			String kmlFile =  kmlStr("data/"+numbergame+".kml");
 			game.sendKML(kmlFile);
-			
+
 		}
 
 		catch (Exception e) {
@@ -187,7 +188,7 @@ public class auto {
 		return st;
 	}
 	/*public String readKML(String a) {
-		
+
 	}*/
 
 	// show the score on the monitor every each minute
