@@ -17,6 +17,8 @@ In our task we have 3 mainly classes which:
 	        the user accumulatting score.
 	        MyGameGui is includding :X,Y Min/Max for scales
                          , play Class , x and y values;
+			 
+			 
 3)Play- This class repressents the whole part that given from the server and send it 
              to MyGameGui for reading from server objects and make using at the class(myGameGui).
 	the paly class is incldue: robot ,fruits , and grpah fildes
