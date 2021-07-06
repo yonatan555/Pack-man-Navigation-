@@ -1,15 +1,19 @@
 # Pack-man-Navigation-
 
-This Project has direct connection to the previous task.
+In our task we have some mainly classes which:
 
-In our task we have 3 mainly classes which:
-
-1)stdDraw- we are using in this class to paint the data in the screen, 
-	  and also to make connection between myGameGUI AND play,
-	  by theard that getting info from the user if to execute manual or auto 
-	  using at the graph that choosen by the user.
-
-2)MyGameGui- this class is exectuing and make actions that show to the user,
+1)Dgraph - this class is include vertexes and edges that build the graph ,
+		node is contain id and a point(x,y)
+		Edge is describe with src (source node) and dest (the destnation of the source node 1 ---> 2)
+		for each edge has a wighet that repressent the cost to arrive from one node to another
+		
+2)algorithms - this class is include a graph , the algorithm class , is made to calculate 
+		destations between 2  diffrent points ( x -- > y ) , by using dijkstra algorithm ,
+		check if the graph is connected using defintion of connected graph , check if there is a 
+		valid path from EVREY node to each other node
+		
+		
+3)MyGameGui- this class is exectuing and make actions that show to the user,
 	         the graph on screen by paint functions by getting information 
 	         from the server ,and print it to screen ,
 	        by manual using has the abillty move the robots at screen and	
@@ -19,6 +23,9 @@ In our task we have 3 mainly classes which:
                          , play Class , x and y values;
 			 
 			 
-3)Play- This class repressents the whole part that given from the server and send it 
+4)Play- This class repressents the whole part that given from the server and send it 
              to MyGameGui for reading from server objects and make using at the class(myGameGui).
 	the paly class is incldue: robot ,fruits , and grpah fildes
+
+
+![image](https://user-images.githubusercontent.com/57701623/124603436-9ad1a280-de72-11eb-8fc6-cc82ce9cdea8.png)
